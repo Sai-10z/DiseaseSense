@@ -1,9 +1,7 @@
-# 🧬 Disease Prediction System using Machine Learning
+# 🧬 DiseaseSense – ML-Based Disease Prediction System
 
-A Django-based machine learning web application that predicts potential diseases from user-entered symptoms.  
-The project was developed to explore how machine learning can assist in healthcare-oriented prediction systems by combining data preprocessing, exploratory data analysis (EDA), multi-model evaluation, and real-time prediction through an interactive web interface.
-
-Multiple classification algorithms were trained and compared using symptom-based datasets, with Logistic Regression selected as the final model for its simplicity, interpretability, and reliable performance.
+A Django-based web application that predicts potential diseases from user-entered symptoms using machine learning. The project includes data preprocessing, exploratory data analysis (EDA), multi-model evaluation, and real-time prediction through an interactive interface.
+Logistic Regression was selected as the final model for its simplicity, interpretability, and reliable performance.
 
 ---
 
@@ -17,8 +15,6 @@ Multiple classification algorithms were trained and compared using symptom-based
 [![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)](https://jupyter.org/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)](https://git-scm.com/)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/)
 
 ---
 
@@ -153,6 +149,6 @@ Disease-Prediction-System/
 
 # 🔐 Project Note & Disclaimer
 
-> Source code is not included in this repository as the project was developed as part of an internship program. This repository is intended to showcase the machine learning workflow, dataset usage, model evaluation, visualizations, and Django web integration. The project is designed for educational and research purposes only and should not be considered as professional medical advice, diagnosis, or treatment.
+> Source code is not included as this project was developed during an internship program. This repository is intended for educational purposes only.
 
 ---
