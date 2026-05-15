@@ -1,109 +1,169 @@
-# 🧬 Disease Prediction Web Application using Machine Learning
+# 🧬 Disease Prediction System using Machine Learning
 
-A web-based application that predicts potential diseases based on user-entered symptoms. Integrates a trained machine learning model with a Django interface for real-time predictions.
+A Django-based machine learning web application that predicts potential diseases from user-entered symptoms.  
+The project was developed to explore how machine learning can assist in healthcare-oriented prediction systems by combining data preprocessing, exploratory data analysis (EDA), multi-model evaluation, and real-time prediction through an interactive web interface.
 
----
-
-## 📌 Project Overview
-
-This project demonstrates how machine learning can be applied to healthcare prediction tasks. Users enter symptoms via a web interface, and the system returns a predicted disease based on a trained model.
-
-**Workflow Summary:**  
-- Data preprocessing & EDA  
-- Model training & comparison  
-- Deployment in a Django web app
+Multiple classification algorithms were trained and compared using symptom-based datasets, with Logistic Regression selected as the final model for its simplicity, interpretability, and reliable performance.
 
 ---
 
-## ⚙️ Workflow
+# 🚀 Tech Stack
 
-**Phase 1 – Model Development**  
-- Load, clean, and preprocess `Training.csv` & `Testing.csv`  
-- Conduct exploratory data analysis (EDA) with graphs & heatmaps  
-- Train multiple models (Logistic Regression, KNN, Naïve Bayes, Decision Tree, Random Forest, Gradient Boosting)  
-- Evaluate performance on test data and select the final model  
-
-**Phase 2 – Web Application Integration**  
-- Serialize the trained model (`.pkl`)  
-- Integrate into Django backend  
-- Create a web form for symptom input  
-- Process input, predict disease, and display results in real-time
-
----
-
-## 🚀 Key Highlights
-
-- End-to-end pipeline from data preprocessing to web deployment  
-- Comparison of multiple models before final selection  
-- Real-time predictions via an interactive web interface  
-- Visualizations of symptom patterns, correlations, and model performance
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)](https://numpy.org/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)](https://git-scm.com/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)](https://github.com/)
 
 ---
 
-## 🧠 Machine Learning Results
+# 🏗 Workflow & Prediction Pipeline
 
-| Model                  | Accuracy (%) |
-|------------------------|-------------|
-| Logistic Regression    | 100         |
-| K-Nearest Neighbors (KNN) | 100      |
-| Naïve Bayes            | 100         |
-| Decision Tree          | 97.619      |
-| Random Forest          | 97.619      |
-| Gradient Boosting      | 97.619      |
-
-**Why Logistic Regression was chosen:**  
-Although three models achieved 100% accuracy, Logistic Regression was selected for its **simplicity, interpretability, and lower risk of overfitting**, making it suitable for practical use in healthcare predictions.
-
----
-
-## 🛠️ Tech Stack
-
-- Python, Jupyter Notebook, Django  
-- Pandas, NumPy, Scikit-learn  
-- Pickle (model serialization)  
-- HTML / CSS  
+```bash
+👤 User Inputs Symptoms
+          ↓
+🌐 Django Web Interface
+          ↓
+⚡ Django Backend Processing
+          ↓
+🧠 Trained Machine Learning Model (.pkl)
+          ↓
+📊 Disease Prediction Logic
+          ↓
+✅ Predicted Disease Returned To User
+```
 
 ---
 
-## 💡 What Makes This Project Unique
+# ✨ Core Features
 
-- End-to-end implementation from notebook experimentation to web deployment  
-- Comparison of multiple models to select the best-performing one  
-- Real-time interactive predictions  
-- Practical dataset handling and deployment workflow
+## 🧠 Machine Learning Module
+- Data preprocessing and cleaning  
+- Exploratory Data Analysis (EDA)  
+- Correlation heatmap generation  
+- Multi-model training and evaluation  
+- Model performance comparison  
+- Trained model serialization using Pickle  
 
----
+## 🌐 Web Application Module
+- Django-based interactive interface  
+- Symptom-based disease prediction  
+- Real-time prediction output  
+- Backend integration with trained ML model  
+- Simple and user-friendly workflow  
 
-## 🔮 Opportunities for Extension
-
-- Evaluate additional metrics (Precision, Recall) for deeper analysis  
-- Expand dataset to cover more symptoms and diseases  
-- Optimize web interface for mobile users  
-- Explore cloud deployment for scalable real-time usage
-
----
-
-## 📂 Repository Contents
-
-- `dataset/Training.csv` – Training dataset  
-- `dataset/Testing.csv` – Testing dataset  
-- Project screenshots (Snapshots - 3.pdf)  
-- README documentation  
-
-> 🔒 Note: Source code is not included in this repository as it was part of an internship project. This repository showcases the workflow, dataset usage, and results.
+## 📊 Data Analysis & Visualization
+- Prognosis distribution graphs  
+- Symptom correlation heatmaps  
+- Model accuracy comparison charts  
+- Dataset exploration and preprocessing analysis  
 
 ---
 
-## 📸 Project Snapshots
+# 🧪 Machine Learning Models & Results
 
-- Django-based symptom input interface  
-- Predicted disease output screen  
-- Prognosis column distribution graph  
-- Correlation heatmap between symptoms  
-- Model accuracy comparison outputs
+| Model | Accuracy (%) |
+|--------|--------------|
+| Logistic Regression | 100 |
+| K-Nearest Neighbors (KNN) | 100 |
+| Naïve Bayes | 100 |
+| Decision Tree | 97.619 |
+| Random Forest | 97.619 |
+| Gradient Boosting | 97.619 |
+
+### ✅ Final Model Selection
+
+Although multiple models achieved perfect accuracy, **Logistic Regression** was selected as the final model due to:
+
+- Simplicity and efficiency  
+- Better interpretability  
+- Lower risk of overfitting  
+- Suitable behavior for healthcare-oriented prediction systems  
 
 ---
 
-## ⚠️ Disclaimer
+# ⚙️ Development Workflow
 
-For educational and research purposes only. Predictions may not always be accurate and should **not** be used for real medical diagnosis or treatment.
+## 📌 Phase 1 – Model Development
+
+- Dataset preprocessing and cleaning  
+- Feature analysis and visualization  
+- Exploratory data analysis (EDA)  
+- Training multiple ML algorithms  
+- Performance evaluation and comparison  
+- Final model selection  
+
+## 📌 Phase 2 – Web Application Integration
+
+- Model serialization using Pickle (`.pkl`)  
+- Django backend integration  
+- Symptom input form development  
+- Real-time prediction handling  
+- Result rendering on frontend  
+
+---
+
+# 📂 Repository Structure
+
+```text
+Disease-Prediction-System/
+│
+├── dataset/
+│   ├── Training.csv
+│   └── Testing.csv
+│
+├── Snapshots/
+├── notebooks/
+├── templates/
+├── static/
+├── model/
+├── README.md
+└── requirements.txt
+```
+
+---
+
+# 📸 Project Snapshots
+
+# 1) Web Application Interface
+
+| Screenshot | Description |
+|------------|-------------|
+| ![Home Page](Snapshots/home.png) | Disease prediction homepage with symptom input interface |
+| ![Prediction Result](Snapshots/result.png) | Real-time disease prediction result display |
+
+---
+
+# 2) Data Analysis & Visualization
+
+| Screenshot | Description |
+|------------|-------------|
+| ![Prognosis Distribution](Snapshots/prognosis.png) | Prognosis column distribution analysis |
+| ![Correlation Heatmap](Snapshots/heatmap.png) | Symptom correlation heatmap visualization |
+
+---
+
+# 🧠 Skills Demonstrated
+
+- Machine Learning model development  
+- Data preprocessing & cleaning  
+- Exploratory Data Analysis (EDA)  
+- Classification algorithms implementation  
+- Model evaluation & comparison  
+- Django web application integration  
+- Backend prediction systems  
+- Data visualization techniques  
+- Real-time ML inference workflow  
+
+---
+
+# 🔐 Project Note & Disclaimer
+
+> Source code is not included in this repository as the project was developed as part of an internship program. This repository is intended to showcase the machine learning workflow, dataset usage, model evaluation, visualizations, and Django web integration. The project is designed for educational and research purposes only and should not be considered as professional medical advice, diagnosis, or treatment.
+
+---
