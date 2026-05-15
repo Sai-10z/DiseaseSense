@@ -130,21 +130,10 @@ Disease-Prediction-System/
 
 # 📸 Project Snapshots
 
-# 1) Web Application Interface
-
 | Screenshot | Description |
 |------------|-------------|
-| ![Home Page](Snapshots/home.png) | Disease prediction homepage with symptom input interface |
-| ![Prediction Result](Snapshots/result.png) | Real-time disease prediction result display |
-
----
-
-# 2) Data Analysis & Visualization
-
-| Screenshot | Description |
-|------------|-------------|
-| ![Prognosis Distribution](Snapshots/prognosis.png) | Prognosis column distribution analysis |
-| ![Correlation Heatmap](Snapshots/heatmap.png) | Symptom correlation heatmap visualization |
+| ![Home Page](Snapshots/home.jpg) | Symptom input interface |
+| ![Prediction Result](Snapshots/result.jpg) | Predicted disease output |
 
 ---
 
