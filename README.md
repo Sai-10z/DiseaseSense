@@ -1,4 +1,4 @@
-# 🧬 DiseaseSense – ML-Based Disease Prediction System
+# 🧬 DiseaseSense – ML Based Disease Prediction System
 
 A Django-based web application that predicts potential diseases from user-entered symptoms using machine learning. The project includes data preprocessing, exploratory data analysis (EDA), multi-model evaluation, and real-time prediction through an interactive interface.
 Logistic Regression was selected as the final model for its simplicity, interpretability, and reliable performance.
