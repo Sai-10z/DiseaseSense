@@ -1,159 +1,188 @@
-# 🧬 DiseaseSense – ML Based Disease Prediction System
+# 🧬 DiseaseSense – AI-Powered Clinical Symptom Analysis System
 
-A Django-based clinical web application that predicts potential medical conditions from user-reported symptoms using machine learning. The system provides an end-to-end healthcare guidance pipeline, including multi-model evaluation, differential diagnosis (DDx), clinical urgency triage, specialist routing, tailored doctor interview preparation, and real-time prediction through a modern single-page interface.
+DiseaseSense is a machine learning-powered clinical web application that analyzes user-reported symptoms and predicts potential diseases through an intelligent diagnostic pipeline. Built with **Python**, **Django**, and **Scikit-Learn**, the application combines predictive analytics with an intuitive single-page interface to help users better understand their symptoms before consulting a healthcare professional.
 
-Logistic Regression was selected as the primary production model for its high interpretability, low risk of overfitting, and rapid inference capability.
+Unlike conventional disease prediction projects that simply output a predicted class, DiseaseSense transforms machine learning predictions into actionable healthcare guidance by integrating:
 
+- 🧠 AI-powered Disease Prediction
+- 📊 Top 3 Differential Diagnoses (DDx)
+- 🚦 Clinical Urgency Assessment
+- 🩺 Specialist Recommendation
+- 📍 Nearby Doctor Search
+- 📋 Appointment Preparation Checklist
+- ❓ Personalized Consultation Questions
+
+The prediction engine was trained on **132 clinical symptoms** spanning **41 disease classes**. After evaluating multiple supervised learning algorithms, **Logistic Regression** was selected as the production model due to its interpretability, computational efficiency, and fast real-time inference.
+
+> **⚠️ Disclaimer:** DiseaseSense is an educational project designed to demonstrate Machine Learning and Full-Stack Development concepts. It is **not** intended to replace professional medical advice, diagnosis, or treatment.
 ---
 
 # 🚀 Tech Stack
 
-[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
-[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)](https://numpy.org/)
-[![Joblib](https://img.shields.io/badge/Joblib-4B8BBE?logo=python&logoColor=white)](https://joblib.readthedocs.io/)
-[![Jupyter](https://img.shields.io/badge/Jupyter-F37626?logo=jupyter&logoColor=white)](https://jupyter.org/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+| Category | Technologies |
+|----------|--------------|
+| **Programming Language** | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) |
+| **Machine Learning** | ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat&logo=scikitlearn&logoColor=white) ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white) ![Joblib](https://img.shields.io/badge/Joblib-FFCC00?style=flat) |
+| **Backend** | ![Django](https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white) |
+| **Frontend** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) |
+| **Data Visualization** | Matplotlib, Seaborn |
+| **Development Tools** | Jupyter Notebook, VS Code |
+| **Dataset** | Training.csv (132 Symptoms • 41 Diseases) |
+| **Model Storage** | Joblib (`model.joblib`) |
 
 ---
 
-# 🏗 Workflow & Prediction Pipeline
+# 🏗️ Workflow & Prediction Pipeline
 
-```bash
-👤 User Inputs Symptoms (Filterable Search Slots)
-          ↓
-🌐 Django Web Interface (Single-Page Seamless Navigation)
-          ↓
-⚡ Django Backend Processing & Vectorization (`views.py`)
-          ↓
-🧠 Serialized Logistic Regression Model (`model.joblib`)
-          ↓
-📊 Differential Diagnosis (DDx) & Probability Scoring
-          ↓
-📋 Clinical Care Package Output:
-   ├── 🎯 Primary Disease Match & Animated Confidence Donut
-   ├── 🚦 Triage & Urgency Severity Level
-   ├── 🩺 Recommended Specialist & Google Maps Search Link
-   ├── 📑 Top 3 Differential Diagnoses (Rank Color-Coded)
-   ├── ❓ Tailored Doctor Questions & Visit Preparation Checklist
-   └── 🚨 Emergency Services Hotline Badge (112 / 108)
+```text
+👤 User Selects Symptoms
+        │
+        ▼
+🔎 Interactive Searchable Symptom Input
+        │
+        ▼
+⚡ Django Backend (Request Processing & Feature Vectorization)
+        │
+        ▼
+🧠 Logistic Regression Prediction Model (`model.joblib`)
+        │
+        ▼
+📊 Probability Estimation (`predict_proba`)
+        │
+        ▼
+📋 Clinical Intelligence Engine
+        ├── 🎯 Primary Disease Prediction
+        ├── 📊 Top 3 Differential Diagnoses (DDx)
+        ├── 🚦 Clinical Urgency Assessment
+        ├── 🩺 Specialist Recommendation
+        ├── 📍 Nearby Doctor Search
+        ├── ❓ Personalized Consultation Questions
+        └── 📑 Appointment Preparation Checklist
+        │
+        ▼
+🌐 Interactive Results Dashboard
 ```
+---
+
+# ✨ Core Features
+
+## 🧠 Machine Learning & Clinical Intelligence
+
+- **Multi-Model Evaluation** – Trained and evaluated multiple classification algorithms, including Logistic Regression, K-Nearest Neighbors, Naïve Bayes, Decision Tree, Random Forest, and Gradient Boosting.
+- **Production-Ready Prediction Engine** – Deploys a serialized **Logistic Regression** model (`model.joblib`) for fast, lightweight, real-time inference.
+- **Optimized Feature Vectorization** – Converts user-selected symptoms into a **132-dimensional binary feature vector** aligned with the training dataset.
+- **Differential Diagnosis (DDx)** – Returns the **Top 3 most probable diseases** ranked by prediction confidence instead of a single diagnosis.
+- **Clinical Urgency Assessment** – Automatically categorizes predictions into **High**, **Moderate**, or **Low** severity levels.
+- **Specialist Recommendation Engine** – Maps predicted diseases to the most appropriate medical specialists, including Dermatologists, Cardiologists, Neurologists, Pulmonologists, and more.
+- **Consultation Question Generator** – Generates personalized questions to help patients prepare for medical appointments.
 
 ---
 
-# ✨ Core Features - 1
+## 🌐 Interactive Web Application
 
-## 🧠 Machine Learning Module
-- Data preprocessing and cleaning  
-- Exploratory Data Analysis (EDA)  
-- Correlation heatmap generation  
-- Multi-model training and evaluation  
-- Model performance comparison  
-- Trained model serialization using Pickle  
-
-## 🌐 Web Application Module
-- Django-based interactive interface  
-- Symptom-based disease prediction  
-- Real-time prediction output  
-- Backend integration with trained ML model  
-- Simple and user-friendly workflow  
-
-## 📊 Data Analysis & Visualization
-- Prognosis distribution graphs  
-- Symptom correlation heatmaps  
-- Model accuracy comparison charts  
-- Dataset exploration and preprocessing analysis  
+- **Single-Page Application (SPA)** with smooth navigation between Hero, Symptom Input, Results, and Consultation Guidance sections.
+- **Searchable Symptom Selection** supporting up to **three symptoms** with live progress indicators.
+- **Real-Time Disease Prediction** powered by asynchronous Django backend requests.
+- **Dynamic Form Validation** with user-friendly error handling and submission feedback.
+- **Responsive Design** optimized for desktop, tablet, and mobile devices.
 
 ---
 
-# Core features 2 
+## 📊 Clinical Visualization & User Experience
 
-## 🧠 Machine Learning & Backend Module
-- **Optimized Feature Vectorization**: Converts selected symptoms into binary vectors corresponding to `Training.csv` feature schema.
-- **Model Serialization (`model.joblib`)**: Fast, lightweight model loading using Joblib instead of standard pickle.
-- **Differential Diagnosis Engine (DDx)**: Generates top 3 ranked candidate predictions with probability scores, guaranteeing non-zero candidates display at a 1% minimum.
-- **Urgency Triage Engine**: Automatically maps predicted diseases to clinical severity levels (**High / Red**, **Moderate / Orange**, **Low / Green**).
-- **Specialist Router**: Maps 41 disease classes to medical specialties (e.g., Dermatologist, Cardiologist, Pulmonologist).
-- **Clinical Question Generator**: Algorithmically generates 3 tailored questions for the patient to ask during their upcoming physician consultation.
-
-## 🌐 Web Application & UI/UX Design
-- **Single-Page Application Architecture**: Smooth sectional scrolling (Hero → Symptoms → Results → Consultation Guidance).
-- **Interactive Searchable Dropdowns**: Filterable symptom search with live slot progress counters (`0/3`, `1/3`, `2/3`, `3/3`).
-- **Animated SVG Confidence Donut**: Custom SVG Donut Chart with scroll-triggered progress ring and centered percentage display.
-- **Color-Coded Differential Diagnosis**: Rank #1 (`#7c3aed` Purple), Rank #2 (`#1d6fd8` Blue), Rank #3 (`#475569` Slate).
-- **Action Buttons & Local Search**: Direct Google Maps specialist locator ("Find Nearby Specialist") with blue pulse indicator.
-- **Emergency Services Badge**: High-visibility `Emergency Services: 112 / 108` pill badge with soft red halo pulse in Section 4.
-- **Brand Assets**: Custom brand Logo (`Logo.webp`) positioned in the top right corner and WebP favicon integration (`Favicon.webp`).
-
+- **Animated SVG Confidence Donut Chart** displaying prediction confidence using smooth scroll-triggered animations.
+- **Rank-Based Differential Diagnosis Cards** with distinct color coding for Top 3 predictions.
+- **Clinical Severity Badges** using intuitive visual indicators for urgency assessment.
+- **Modern Healthcare UI** featuring glassmorphism, responsive layouts, custom animations, and structured visual hierarchy.
 
 ---
 
-# 🧪 Machine Learning Models & Results
+## 🩺 Healthcare Assistance Features
+
+- **Nearby Specialist Locator** with direct Google Maps integration.
+- **Appointment Preparation Checklist** helping users organize symptoms, medications, and medical history before visiting a physician.
+- **Emergency Support Banner** displaying emergency contact numbers (**112 / 108**) for high-risk conditions.
+- **Educational Medical Disclaimer** encouraging professional medical consultation and responsible use.
+
+---
+
+# 🧪 Machine Learning Models & Evaluation
+
+DiseaseSense was developed using a supervised multi-class classification approach to predict diseases from symptom-based feature vectors. Multiple machine learning algorithms were trained, evaluated, and compared before selecting the final production model.
+
+## 📊 Model Performance Comparison
 
 | Model | Accuracy (%) |
-|--------|--------------|
-| Logistic Regression | 100.0 |
-| K-Nearest Neighbors (KNN) | 100.0 |
-| Naïve Bayes | 100.0 |
+|--------------------------|-------------:|
+| Logistic Regression | **100.00** |
+| K-Nearest Neighbors (KNN) | **100.00** |
+| Naïve Bayes | **100.00** |
 | Decision Tree | 97.62 |
 | Random Forest | 97.62 |
 | Gradient Boosting | 97.62 |
 
-### ✅ Final Model Selection
+---
 
-Although multiple algorithms achieved top-tier evaluation scores during model training, **Logistic Regression** was selected as the final production model due to:
+## 🏆 Production Model Selection
 
-- High mathematical interpretability for healthcare applications  
-- Computational efficiency and low memory overhead  
-- Robust generalization across multi-class symptom features  
-- Seamless integration with Joblib serialization  
+Although several algorithms achieved excellent validation accuracy, **Logistic Regression** was selected as the production model based on its overall engineering advantages rather than accuracy alone.
+
+### Why Logistic Regression?
+
+- High mathematical interpretability
+- Fast real-time inference
+- Low memory footprint
+- Strong generalization for binary symptom vectors
+- Low computational overhead
+- Easy deployment using Joblib serialization
+- Well-suited for healthcare decision support applications where explainability is important
 
 ---
 
 # ⚙️ Development Workflow
 
-## 📌 Phase 1 – Model Development
+The development of **DiseaseSense** followed a structured workflow, beginning with data exploration and model development before progressing to backend integration, frontend implementation, and user experience enhancements.
 
-- Dataset preprocessing and cleaning  
-- Feature analysis and visualization  
-- Exploratory data analysis (EDA)  
-- Training multiple ML algorithms  
-- Performance evaluation and comparison  
-- Final model selection  
+## 📌 Phase 1 – Data Analysis & Model Development
 
-## 📌 Phase 2 – Web Application Integration
+- Explored and analyzed the clinical symptom dataset (`Training.csv`)
+- Performed data preprocessing and feature engineering
+- Conducted Exploratory Data Analysis (EDA)
+- Trained and evaluated multiple classification algorithms
+- Compared model performance using accuracy metrics
+- Selected **Logistic Regression** as the production model
+- Serialized the trained model using **Joblib** (`model.joblib`)
 
-- Model serialization using Pickle (`.pkl`)  
-- Django backend integration  
-- Symptom input form development  
-- Real-time prediction handling  
-- Result rendering on frontend  
+## 📌 Phase 2 – Backend Development
 
----
+- Built the application using the **Django** framework
+- Implemented request routing and view logic
+- Developed the prediction pipeline for symptom vectorization
+- Integrated the trained ML model with the backend
+- Implemented probability scoring using `predict_proba()`
+- Developed the Differential Diagnosis (DDx) engine
+- Added clinical urgency classification
+- Implemented specialist recommendation logic
+- Configured static asset management for deployment
 
-# Development workflow 2
+## 📌 Phase 3 – Frontend Development
 
-## 📌 Phase 1 – Model Training & Notebook Pipeline
-- Dataset ingestion and preprocessing (`Training.csv`)  
-- Feature matrix definition (132 clinical symptoms across 41 disease classes)  
-- Multi-model evaluation and confusion matrix visualization (`Disease_Prediction_Model_Training.ipynb`)  
-- Model export (`model.joblib`)  
+- Designed a modern single-page user interface
+- Developed searchable symptom selection components
+- Added dynamic form validation and error handling
+- Built an animated SVG confidence donut chart
+- Designed color-coded Differential Diagnosis cards
+- Integrated Google Maps specialist search
+- Added responsive layouts for desktop and mobile devices
 
-## 📌 Phase 2 – Django Backend Architecture
-- Custom views for single-page rendering (`views.py`)  
-- Asynchronous prediction endpoint (`POST /predict/`) returning structured JSON payload  
-- Static file serving configuration (`settings.py` & `urls.py`)  
-- Robust error handling and silent fallback handling  
+## 📌 Phase 4 – Testing & Refinement
 
-## 📌 Phase 3 – Web Application & UI Refinement
-- Custom CSS Design System featuring responsive layouts and glassmorphic navigation  
-- Dynamic JavaScript state management and DOM manipulation  
-- Interactive charts and rank-based differential diagnosis UI  
-- Verification of cross-browser compatibility and keyboard accessibility  
+- Verified prediction accuracy across multiple test cases
+- Tested frontend responsiveness on different screen sizes
+- Optimized user interactions and interface animations
+- Improved accessibility and navigation flow
+- Refined UI consistency and visual hierarchy
+- Validated end-to-end prediction workflow
 
 ---
 
@@ -162,81 +191,181 @@ Although multiple algorithms achieved top-tier evaluation scores during model tr
 ```text
 DiseaseSense/
 │
-├── Disease_Prediction_Model_Training.ipynb # Jupyter notebook for model training & EDA
-├── requirements.txt                         # Python dependencies
-├── pyvenv.cfg                               # Virtual environment configuration
-├── README.md                                # Project documentation
+├── Disease_Prediction_Model_Training.ipynb   # ML training, EDA & model evaluation
+├── requirements.txt                          # Project dependencies
+├── README.md                                 # Project documentation
 │
-├── static/                                  # Root static brand assets
-│   ├── Favicon.webp
-│   └── Logo.webp
+├── static/                                   # Global static assets
+│   ├── Logo.webp
+│   └── Favicon.webp
 │
-└── app/                                     # Django Application Root
-    ├── manage.py                            # Django management script
-    ├── model.joblib                         # Trained Logistic Regression model
-    ├── Training.csv                         # Dataset used for features & training
-    ├── db.sqlite3                           # SQLite database
-    ├── requirements.txt                     # Application requirements
-    ├── retrain_model.py                     # Script to retrain model if needed
+└── app/
+    ├── manage.py                             # Django management script
+    ├── model.joblib                          # Trained Logistic Regression model
+    ├── Training.csv                          # Clinical symptom dataset
+    ├── retrain_model.py                      # Model retraining utility
+    ├── db.sqlite3                            # Development database
     │
-    ├── static/                              # App static assets
-    │   ├── Favicon.webp
-    │   └── Logo.webp
+    ├── backend/
+    │   ├── settings.py                       # Django configuration
+    │   ├── urls.py                           # Application routes
+    │   ├── views.py                          # Prediction pipeline & business logic
+    │   ├── wsgi.py                           # WSGI entry point
+    │   └── asgi.py                           # ASGI entry point
     │
     ├── templates/
-    │   └── index.html                       # Single-page frontend template & UI script
+    │   └── index.html                        # Single-page application interface
     │
-    └── backend/                             # Django backend configuration & logic
-        ├── __init__.py
-        ├── settings.py                      # App settings & static paths
-        ├── urls.py                          # URL routes & static asset serving
-        ├── views.py                         # Prediction logic, DDx, and triage routing
-        ├── wsgi.py                          # WSGI deployment entry point
-        └── asgi.py                          # ASGI entry point
+    └── static/
+        ├── Logo.webp
+        └── Favicon.webp
 ```
-
 ---
 
 # 📸 Project Snapshots
 
-| Screenshot | Description |
-|------------|-------------|
-| ![Home Page](Snapshots/home.jpg) | Symptom input interface |
-| ![Prediction Result](Snapshots/result.jpg) | Predicted disease output |
+The following screenshots highlight the complete DiseaseSense workflow—from symptom selection and AI-powered disease prediction to personalized clinical guidance and specialist recommendations.
+
+| **Home & Symptom Selection** | **Disease Prediction Results** |
+|:----------------------------:|:------------------------------:|
+| <img src="screenshots/home.webp" alt="Home & Symptom Selection" width="100%"> | <img src="screenshots/symptoms.webp" alt="Disease Prediction Results" width="100%"> |
+| Search and select up to **three symptoms** using interactive, filterable dropdowns with real-time validation and live progress indicators. | View the **predicted disease**, animated confidence score, **Top 3 Differential Diagnoses (DDx)**, and clinical urgency assessment. |
 
 ---
 
+| **Clinical Guidance** | **Specialist Recommendation** |
+|:---------------------:|:-----------------------------:|
+| <img src="screenshots/result.webp" alt="Clinical Guidance" width="100%"> | <img src="screenshots/consult.webp" alt="Specialist Recommendation" width="100%"> |
+| Receive a personalized consultation checklist along with dynamically generated questions to help prepare for your medical appointment. | Discover the recommended medical specialist, access Google Maps for nearby doctors, and view emergency guidance for high-risk conditions. |
+
+---
 # 🧠 Skills Demonstrated
 
-- Machine Learning model development  
-- Data preprocessing & cleaning  
-- Exploratory Data Analysis (EDA)  
-- Classification algorithms implementation  
-- Model evaluation & comparison  
-- Django web application integration  
-- Backend prediction systems  
-- Data visualization techniques  
-- Real-time ML inference workflow  
+### 🤖 Machine Learning
+
+- Supervised Machine Learning
+- Multi-Class Classification
+- Model Training & Evaluation
+- Feature Engineering & Vectorization
+- Probability Estimation using `predict_proba()`
+- Model Selection & Performance Comparison
+- Model Serialization with Joblib
 
 ---
 
-# skills demo - 2
+### 📊 Data Analysis
 
-# 🧠 Key Skills & Concepts Demonstrated
-
-- Machine Learning classification & model evaluation  
-- Data preprocessing, vectorization, and feature engineering  
-- Model serialization using Joblib (`.joblib`)  
-- Full-stack web application development with Django  
-- RESTful AJAX communication & JSON payload structure  
-- Differential diagnosis (DDx) & clinical triage system design  
-- Responsive UI design, custom CSS animations, and SVG visualization  
-- Real-time ML inference & production error handling  
+- Data Cleaning & Preprocessing
+- Exploratory Data Analysis (EDA)
+- Feature Correlation Analysis
+- Data Visualization
+- Clinical Dataset Interpretation
 
 ---
 
-# 🔐 Project Note & Disclaimer
+### 🌐 Full-Stack Web Development
 
-> **Educational Disclaimer**: DiseaseSense is an AI-assisted educational tool designed to provide general medical information and symptom evaluation. It does not replace professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider for official medical guidance. In case of emergency, contact local emergency services immediately (e.g., 112 / 108).
+- Django Web Framework
+- RESTful Backend Development
+- Asynchronous AJAX Requests
+- JSON Data Exchange
+- Static Asset Management
+- Responsive Single-Page Application (SPA)
+
+---
+
+### 🎨 Frontend Development
+
+- HTML5, CSS3 & Vanilla JavaScript
+- Responsive UI Design
+- DOM Manipulation
+- SVG-Based Data Visualization
+- CSS Animations & Micro-Interactions
+- User Experience (UX) Design
+
+---
+
+### 🏥 System Design & Software Engineering
+
+- End-to-End ML System Integration
+- Clinical Decision Support Workflow
+- Differential Diagnosis (DDx) Design
+- Urgency & Severity Classification
+- Specialist Recommendation System
+- Error Handling & Input Validation
+- Modular Application Architecture
+
+---
+
+### 💡 Professional Skills
+
+- Problem Solving
+- Analytical Thinking
+- Software Debugging
+- Technical Documentation
+- Model Deployment
+- Full Project Lifecycle Development
+
+---
+
+# 🚀 Future Enhancements
+
+- User authentication and patient profiles
+- Medical history tracking
+- PDF report generation
+- AI-powered symptom explanation using LLMs
+- Voice-based symptom input
+- Cloud deployment using AWS
+- Docker containerization
+- CI/CD pipeline integration
+- Doctor appointment booking
+- Electronic Health Record (EHR) integration
+
+---
+
+# ⚠️ Project Disclaimer
+
+> **Educational Purpose Only**
+>
+> DiseaseSense is an AI-assisted educational and research project developed to demonstrate the application of **Machine Learning**, **Data Analysis**, and **Full-Stack Web Development** in healthcare. The predictions, clinical guidance, and recommendations generated by the system are intended solely for learning and demonstration purposes.
+
+### Important Notice
+
+- This application **does not provide medical advice, diagnosis, or treatment**.
+- Disease predictions are generated using a machine learning model trained on a predefined symptom dataset and **should not be considered clinically accurate or definitive**.
+- Users should always consult a **licensed healthcare professional** for medical evaluation, diagnosis, and treatment.
+- In case of a medical emergency, immediately contact your local emergency services or visit the nearest healthcare facility.
+
+---
+
+### Academic Use
+
+DiseaseSense was developed as an academic project to explore:
+
+- Machine Learning for Healthcare
+- Clinical Decision Support Systems
+- Django-based Full-Stack Development
+- Human-Centered UI/UX Design
+- Data Visualization & Predictive Analytics
+
+This project is intended to showcase technical implementation and software engineering practices rather than serve as a certified medical application.
+
+---
+
+# 🙏 Acknowledgements
+
+This project was developed as part of my Machine Learning journey to explore how predictive analytics can be combined with modern web technologies to build interactive healthcare applications.
+
+Special thanks to the open-source Python ecosystem, including:
+
+- Python
+- Django
+- Scikit-Learn
+- Pandas
+- NumPy
+- Matplotlib
+- Jupyter Notebook
+
+Their tools and documentation made the development of this project possible.
 
 ---
