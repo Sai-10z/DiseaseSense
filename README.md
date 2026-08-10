@@ -1,23 +1,20 @@
 # 🧬 DiseaseSense – Machine Learning Symptom Analysis System
 
 DiseaseSense is a machine learning web application built with **Python**, **Django**, and **Scikit-Learn** that predicts potential diseases based on user-selected symptoms.
-
-The project combines a trained machine learning model with a simple clinical guidance system to help users better understand their symptoms before consulting a healthcare professional.
+It combines a trained machine learning model with simple clinical guidance to help users better understand their symptoms before consulting a healthcare professional.
 
 ### ✨ Highlights
 
 - Disease prediction
 - Top 3 predicted conditions
-- Prediction confidence
-- Urgency indication
+- Confidence Score
+- Urgency assessment
 - Specialist recommendation
 - Nearby specialist search
 - Appointment preparation checklist
 - Suggested questions for the doctor
 
-The model was trained using a dataset containing **132 symptoms** across **41 disease classes**. Multiple machine learning algorithms were trained and compared, with **Logistic Regression** selected as the final model because it provides fast inference, good interpretability, and consistent performance.
-
-This project demonstrates the complete workflow of building and deploying a machine learning application—from data preprocessing and model training to backend integration and an interactive web interface.
+The prediction model was trained on a dataset containing **132 symptoms** across **41 disease classes**. After comparing multiple machine learning algorithms, **Logistic Regression** was selected for its speed, interpretability, and consistent performance.
 
 ---
 
@@ -38,7 +35,7 @@ This project demonstrates the complete workflow of building and deploying a mach
 
 # ✨ Core Features
 
-DiseaseSense combines machine learning predictions with simple clinical guidance to provide a complete symptom analysis workflow.
+DiseaseSense combines machine learning predictions with simple clinical guidance to help users better understand their symptoms.
 
 | Feature | Description |
 |---------|-------------|
@@ -105,44 +102,41 @@ The following workflow shows how user input moves through the prediction pipelin
  └── Consultation Questions
         │
         ▼
-🌐 Interactive Results Interface
+🌐 Results Interface
 ```
 
 ---
 
 # 🧪 Machine Learning Models & Evaluation
 
-DiseaseSense uses a supervised multi-class classification approach to predict potential diseases from symptom-based feature vectors.
+DiseaseSense uses supervised multi-class classification to predict diseases from symptom-based feature vectors.
 
-Multiple machine learning models were trained and compared before selecting the model used by the application.
+Multiple machine learning models were trained and compared before selecting the final model for the application.
 
 ## 📊 Model Performance Comparison
 
-| Model | Accuracy |
-|---|---:|
-| **Logistic Regression** | **100.00%** |
+| Model                         |    Accuracy |
+| ----------------------------- | ----------: |
+| **Logistic Regression**       | **100.00%** |
 | **K-Nearest Neighbors (KNN)** | **100.00%** |
-| **Naïve Bayes** | **100.00%** |
-| Decision Tree | 97.62% |
-| Random Forest | 97.62% |
-| Gradient Boosting | 97.62% |
+| **Naïve Bayes**               | **100.00%** |
+| Decision Tree                 |      97.62% |
+| Random Forest                 |      97.62% |
+| Gradient Boosting             |      97.62% |
 
-> **Important:** These accuracy results were obtained using the project's dataset and evaluation methodology. The dataset is a benchmark-style symptom/disease dataset and these results **do not represent real-world clinical diagnostic accuracy**. The reported performance should not be interpreted as evidence that the model can reliably diagnose diseases in clinical settings.
+> **Important:** These results were obtained using the project's dataset and evaluation methodology. They do **not** represent real-world clinical diagnostic accuracy and should not be interpreted as medical reliability.
 
 ## 🏆 Selected Model
 
-Although Logistic Regression, KNN, and Naïve Bayes achieved the highest accuracy on the evaluation dataset, **Logistic Regression was selected as the application model**.
+Although Logistic Regression, KNN, and Naïve Bayes achieved the highest accuracy, **Logistic Regression** was chosen for deployment because it offers:
 
-The selection was based on:
+- Fast inference
+- Good interpretability
+- Low computational overhead
+- Efficient model storage with Joblib
+- Native probability estimation using `predict_proba()`
 
-- **High predictive performance** on the evaluation dataset
-- **Interpretability** compared with more complex models
-- **Fast inference** for real-time web requests
-- **Low computational overhead**
-- **Efficient model storage and loading** using Joblib
-- **Native probability estimation** through `predict_proba()`
-
-The final model is serialized as `model.joblib` and loaded by the Django application for real-time predictions.
+The trained model is saved as `model.joblib` and loaded by the Django application for real-time predictions.
 
 ---
 
@@ -152,14 +146,14 @@ The project includes the following key components:
 
 - Performed data preprocessing and exploratory data analysis (EDA).
 - Trained and compared multiple machine learning models.
-- Selected and deployed a Logistic Regression model using Joblib.
-- Built the prediction pipeline.
+- Deployed the Logistic Regression model using Joblib.
+- Built the prediction pipeline for real-time inference.
 - Used `predict_proba()` to rank the Top 3 predicted conditions.
 - Integrated the model with a Django backend.
 - Designed a responsive single-page interface.
-- Added specialist recommendations and consultation guidance.
+- Added specialist recommendations and consultation support.
 - Integrated Google Maps for nearby specialists.
-- Included medical disclaimers and emergency guidance.
+- Included medical disclaimers and emergency information.
 
 ---
 
@@ -168,7 +162,7 @@ The project includes the following key components:
 ```text
 DiseaseSense/
 │
-├── Disease_Prediction_Model_Training.ipynb   # Model training, EDA & evaluation
+├── Disease_Prediction_Model_Training.ipynb   Model training and evaluation
 ├── README.md                                 # Project documentation
 ├── requirements.txt                          # Python dependencies
 ├── screenshots/                              # Application screenshots
@@ -186,7 +180,7 @@ DiseaseSense/
     ├── backend/
     │   ├── settings.py                       # Django configuration
     │   ├── urls.py                           # URL routing
-    │   ├── views.py                          # Prediction pipeline & application logic
+    │   ├── views.py                          # Prediction logic
     │   ├── wsgi.py                           # WSGI entry point
     │   └── asgi.py                           # ASGI entry point
     │
@@ -211,8 +205,6 @@ git clone https://github.com/<your-username>/DiseaseSense.git
 cd DiseaseSense
 ```
 
----
-
 ## 2️⃣ Create a Virtual Environment
 
 ### Windows
@@ -229,15 +221,11 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
----
-
 ## 3️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
-
----
 
 ## 4️⃣ Navigate to the Django Application
 
@@ -245,25 +233,21 @@ pip install -r requirements.txt
 cd app
 ```
 
----
-
 ## 5️⃣ Start the Development Server
 
 ```bash
 python manage.py runserver
 ```
 
----
-
 ## 6️⃣ Open the Application
 
-Visit the following URL in your browser:
+Open your browser and visit:
 
 ```text
 http://127.0.0.1:8000/
 ```
 
-The DiseaseSense web application should now be running locally.
+The application should now be running locally.
 
 ---
 
@@ -281,7 +265,7 @@ Some features planned for future versions of DiseaseSense include:
 
 ---
 
-# ⚠️ Current Limitations
+# ⚙️ Current Limitations
 
 DiseaseSense is an educational project and has the following limitations:
 
@@ -296,8 +280,7 @@ DiseaseSense is an educational project and has the following limitations:
 
 # ⚠️ Disclaimer
 
-DiseaseSense is an educational Machine Learning project developed for learning and demonstration purposes. > **⚠️ Disclaimer:** DiseaseSense is an educational project developed to demonstrate Machine Learning and Full-Stack Web Development concepts. It is **not** intended to provide medical diagnosis, treatment, or professional medical advice.
-
-The predictions and guidance provided by this application should **not** be considered medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional for medical concerns. In case of a medical emergency, contact your local emergency services immediately.
+DiseaseSense is an educational Machine Learning project developed for learning and demonstration purposes. The predictions and guidance provided by this application are **not** intended to replace professional medical advice, diagnosis, or treatment.
+Always consult a qualified healthcare professional for medical concerns. In case of a medical emergency, contact your local emergency services immediately.
 
 ---
