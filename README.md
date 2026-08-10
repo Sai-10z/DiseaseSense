@@ -56,12 +56,12 @@ The Snapshots below demonstrate the complete DiseaseSense workflow, from the ini
 
 | **Home / Landing Page** | **Symptom Analysis** |
 | :---: | :---: |
-| ![DiseaseSense Home](Snapshots/home.png) | ![DiseaseSense Symptom Analysis](Snapshots/symptoms.png) |
+| ![DiseaseSense Home](Snapshots/home.webp) | ![DiseaseSense Symptom Analysis](Snapshots/symptoms.webp) |
 | The landing page introduces DiseaseSense and allows users to begin a symptom assessment. | Users can select up to three symptoms through interactive searchable fields before running the analysis. |
 
 | **Analysis Results** | **Care Guidance & Specialist Recommendation** |
 | :---: | :---: |
-| ![DiseaseSense Analysis Results](Snapshots/results.png) | ![DiseaseSense Care Guidance](Snapshots/consult.png) |
+| ![DiseaseSense Analysis Results](Snapshots/results.webp) | ![DiseaseSense Care Guidance](Snapshots/consult.webp) |
 | Displays the predicted condition, model confidence, reported symptoms, and Top 3 model predictions. | Provides specialist recommendations, appointment preparation guidance, consultation questions, and emergency-care guidance. |
 
 ---
@@ -166,10 +166,10 @@ DiseaseSense/
 ├── README.md                                 # Project documentation
 ├── requirements.txt                          # Python dependencies
 ├── Snapshots/                              # Application Snapshots
-│   ├── home.png
-│   ├── symptoms.png
-│   ├── results.png
-│   └── consult.png
+│   ├── home.webp
+│   ├── symptoms.webp
+│   ├── results.webp
+│   └── consult.webp
 │
 └── app/
     ├── manage.py                             # Django management script
