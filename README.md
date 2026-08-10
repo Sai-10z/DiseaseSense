@@ -50,18 +50,18 @@ DiseaseSense combines machine learning predictions with simple clinical guidance
 
 ---
 
-# 📸 Project Screenshots
+# 📸 Project Snapshots
 
-The screenshots below demonstrate the complete DiseaseSense workflow, from the initial landing page and symptom selection to machine learning results and personalized care guidance.
+The Snapshots below demonstrate the complete DiseaseSense workflow, from the initial landing page and symptom selection to machine learning results and personalized care guidance.
 
 | **Home / Landing Page** | **Symptom Analysis** |
 | :---: | :---: |
-| ![DiseaseSense Home](screenshots/home.png) | ![DiseaseSense Symptom Analysis](screenshots/symptoms.png) |
+| ![DiseaseSense Home](Snapshots/home.png) | ![DiseaseSense Symptom Analysis](Snapshots/symptoms.png) |
 | The landing page introduces DiseaseSense and allows users to begin a symptom assessment. | Users can select up to three symptoms through interactive searchable fields before running the analysis. |
 
 | **Analysis Results** | **Care Guidance & Specialist Recommendation** |
 | :---: | :---: |
-| ![DiseaseSense Analysis Results](screenshots/results.png) | ![DiseaseSense Care Guidance](screenshots/consult.png) |
+| ![DiseaseSense Analysis Results](Snapshots/results.png) | ![DiseaseSense Care Guidance](Snapshots/consult.png) |
 | Displays the predicted condition, model confidence, reported symptoms, and Top 3 model predictions. | Provides specialist recommendations, appointment preparation guidance, consultation questions, and emergency-care guidance. |
 
 ---
@@ -165,7 +165,7 @@ DiseaseSense/
 ├── Disease_Prediction_Model_Training.ipynb   Model training and evaluation
 ├── README.md                                 # Project documentation
 ├── requirements.txt                          # Python dependencies
-├── screenshots/                              # Application screenshots
+├── Snapshots/                              # Application Snapshots
 │   ├── home.png
 │   ├── symptoms.png
 │   ├── results.png
