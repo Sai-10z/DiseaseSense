@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DiseaseSense is an AI-powered symptom checker for instant disease prediction.">
+    <title>DiseaseSense | Symptom Checker</title>
+    <link rel="icon" type="image/webp" href="/static/Favicon.webp">
+    <link rel="shortcut icon" type="image/webp" href="/static/Favicon.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+
+        /* ── Reset ─────────────────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Hide scrollbar everywhere */
+        html, body { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #111827;
+            background: #ffffff;
+            line-height: 1.6;
+            /* Hide default system cursor site-wide */
+            cursor: none;
+        }
+
+        /* ── Tokens ────────────────────────────────────────────────────── */
+        :root {
+            --blue:     #1d6fd8;
+            --blue-lt:  #eff6ff;
+            --blue-mid: #bfdbfe;
+            --blue-dk:  #1451a8;
+            --border:   #e5e7eb;
+            --soft:     #f9fafb;
+            --text:     #111827;
+            --text-mid: #4b5563;
+            --text-soft:#9ca3af;
+
+            /* Grid line color used across all sections */
+            --grid-color: rgba(0, 0, 0, 0.055);
+        }
+
+        /* ── Custom Cursor ─────────────────────────────────────────────── */
+        #cursor-ring {
+            position: fixed;
+            width: 34px;
+            height: 34px;
+            border: 2px solid var(--blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s ease, width 0.18s ease, height 0.18s ease, opacity 0.2s ease;
+            will-change: left, top;
+        }
+        #cursor-dot {
+            position: fixed;
+            width: 7px;
+            height: 7px;
+            background: #111827;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            will-change: left, top;
+        }
+
+        /* Cursor grows when hovering clickable elements */
+        body.cursor-hover #cursor-ring {
+            width: 48px;
+            height: 48px;
+            border-color: var(--blue-dk);
+            opacity: 0.6;
+        }
+
+        /* Hide cursor elements on touch */
+        @media (hover: none) {
+            #cursor-ring, #cursor-dot { display: none; }
+            body { cursor: auto; }
+        }
+
+        /* ── Global grid background (applied to ALL sections via section::before) */
+        section {
+            position: relative;
+            scroll-snap-align: start;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 48px 60px;
+        }
+
+        /* Grid sits in pseudo-element, BEHIND all section content */
+        section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 48px 48px;
+            z-index: 0;          /* behind content */
+            pointer-events: none;
+        }
+
+        /* All direct children of section must stack above the grid */
+        .section-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+
+
+        /* ── SECTION 1: Hero ───────────────────────────────────────────── */
+        #section-hero { background: #ffffff; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--blue-lt);
+            border: 1px solid var(--blue-mid);
+            color: var(--blue);
+            font-size: 0.84rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            border-radius: 6px;
+            margin-bottom: 32px;
+        }
+
+        .badge-dot {
+            width: 7px; height: 7px;
+            background: var(--blue);
+            border-radius: 50%;
+        }
+
+        .hero-heading {
+            font-size: clamp(3.2rem, 6.5vw, 5.2rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -1.8px;
+            margin-bottom: 28px;
+        }
+        .hero-heading .blk { color: #111827; }
+        .hero-heading .blu { color: var(--blue); }
+        .hero-heading .light {
+            font-weight: 300;
+            font-size: 0.48em;
+            letter-spacing: -0.3px;
+            display: block;
+            margin-top: 10px;
+            line-height: 1.35;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-mid);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .hero-ctas {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff;
+            color: var(--blue);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.0rem;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1.5px solid var(--blue);
+            cursor: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(29, 111, 216, 0.08);
+            letter-spacing: 0.01em;
+        }
+        .btn-primary:hover {
+            background: var(--blue-lt);
+            border-color: var(--blue-dk);
+            color: var(--blue-dk);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(29, 111, 216, 0.18);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--text-mid);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 500;
+            padding: 14px 4px;
+            background: none;
+            border: none;
+            cursor: none;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .btn-ghost:hover { color: var(--blue); }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .stat-num {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--blue);
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            font-weight: 500;
+        }
+
+        /* Low-profile minimalist scroll indicator (Top & Bottom) */
+        .scroll-cue {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            cursor: none;
+            opacity: 0.45;
+            z-index: 10;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .scroll-cue.scroll-top { top: 12px; }
+        .scroll-cue.scroll-bottom { bottom: 12px; }
+
+        .scroll-cue:hover { opacity: 0.85; }
+        .scroll-cue.scroll-bottom:hover { transform: translateX(-50%) translateY(2px); }
+        .scroll-cue.scroll-top:hover    { transform: translateX(-50%) translateY(-2px); }
+
+        .scroll-cue-label {
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-mid);
+        }
+        .scroll-cue svg {
+            color: var(--text-mid);
+        }
+        .scroll-cue.scroll-bottom svg { animation: bounceDown 2.2s ease infinite; }
+        .scroll-cue.scroll-top svg    { animation: bounceUp 2.2s ease infinite; }
+
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(4px); }
+        }
+        @keyframes bounceUp {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-4px); }
+        }
+
+        @keyframes bluePulse {
+            0%, 100% { box-shadow: 0 2px 8px rgba(29, 111, 216, 0.08); border-color: #1d6fd8; }
+            50%       { box-shadow: 0 0 0 4px rgba(29, 111, 216, 0.12); border-color: #3b82f6; }
+        }
+
+        @keyframes redPulse {
+            0%, 100% { box-shadow: 0 2px 6px rgba(220, 38, 38, 0.08); border-color: #fca5a5; }
+            50%       { box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12); border-color: #ef4444; }
+        }
+
+        /* Gentle micro-hover transitions for interactive buttons */
+        .btn-outline, .btn-primary, .consult-btn, .slot {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        .btn-outline:hover {
+            border-color: var(--blue-mid);
+            color: var(--blue);
+        }
+
+        /* Section Background Alternation: 1 & 3 White (#ffffff), 2 & 4 Soft (var(--soft)) */
+        #section-hero     { background: #ffffff; }
+        #section-symptoms { background: var(--soft); }
+        #section-result   { background: #ffffff; }
+        #section-consult  { background: var(--soft); }
+
+        .section-eyebrow {
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 12px;
+        }
+
+        .section-heading {
+            font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            color: var(--text);
+            margin-bottom: 10px;
+            line-height: 1.15;
+        }
+        .section-heading .blu { color: var(--blue); }
+
+        .section-sub {
+            font-size: 0.94rem;
+            color: var(--text-mid);
+            margin-bottom: 36px;
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        /* Card container for the form */
+        .symptoms-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        /* Progress row */
+        .step-progress {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+        .step-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.3s, width 0.25s;
+        }
+        .step-dot.filled { background: var(--blue); width: 22px; border-radius: 4px; }
+        .step-text {
+            margin-left: auto;
+            font-size: 0.78rem;
+            color: var(--text-soft);
+        }
+        .step-text .count { color: var(--blue); font-weight: 600; }
+
+        /* Inline error */
+        .form-error {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 0.83rem;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        .form-error.visible { display: block; }
+
+        /* Dropdown slots */
+        .symptom-slots { display: grid; gap: 14px; margin-bottom: 24px; }
+
+        .slot {
+            display: grid;
+            grid-template-columns: 38px 1fr;
+            align-items: start;
+            gap: 14px;
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            position: relative;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        /* Coloured left accent per slot — matches the number badge */
+        .slot.s1 { border-left: 2px solid #1d6fd8; }
+        .slot.s2 { border-left: 2px solid #15803d; }
+        .slot.s3 { border-left: 2px solid #7c3aed; }
+
+        /* Light hover highlight respective to slot color code */
+        .slot.s1:hover { background: rgba(29, 111, 216, 0.025); border-color: rgba(29, 111, 216, 0.35); }
+        .slot.s2:hover { background: rgba(21, 128, 61, 0.025); border-color: rgba(21, 128, 61, 0.35); }
+        .slot.s3:hover { background: rgba(124, 58, 237, 0.025); border-color: rgba(124, 58, 237, 0.35); }
+
+        .slot.s1.active { border-color: #1d6fd8; box-shadow: 0 0 0 3px rgba(29,111,216,0.1); background: #ffffff; }
+        .slot.s2.active { border-color: #15803d; box-shadow: 0 0 0 3px rgba(21,128,61,0.1); background: #ffffff; }
+        .slot.s3.active { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); background: #ffffff; }
+
+        .slot-num {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .slot-num.n1 { background: var(--blue-lt); color: #1d6fd8; }
+        .slot-num.n2 { background: #f0fdf4; color: #15803d; }
+        .slot-num.n3 { background: #faf5ff; color: #7c3aed; }
+
+        .slot-body { min-width: 0; }
+
+        /* ── Custom searchable dropdown ───────────────────── */
+        .cs-wrap { position: relative; }
+
+        .cs-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: none;
+            border: none;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            cursor: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .cs-display {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            min-height: 1.3em;
+        }
+        .cs-display.ph { color: var(--text-soft); font-weight: 400; }
+
+        .cs-arrow {
+            flex-shrink: 0;
+            color: var(--text-soft);
+            transition: transform 0.22s ease;
+        }
+        .cs-wrap.open .cs-arrow { transform: rotate(180deg); }
+
+        .cs-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            left: -52px;
+            right: -16px;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.13);
+            z-index: 200;
+            overflow: hidden;
+            animation: ddFadeIn 0.18s ease both;
+        }
+        .cs-wrap.open .cs-dropdown { display: block; }
+
+        @keyframes ddFadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .cs-search-box {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            background: #f9fafb;
+        }
+        .cs-search-icon { color: var(--text-soft); flex-shrink: 0; }
+        .cs-search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text);
+            cursor: text;
+        }
+        .cs-search-input::placeholder { color: var(--text-soft); }
+
+        .cs-list {
+            max-height: 220px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #e5e7eb transparent;
+        }
+
+        .cs-item {
+            padding: 9px 14px;
+            font-size: 0.87rem;
+            color: var(--text-mid);
+            cursor: none;
+            transition: background 0.12s, color 0.12s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .cs-item:hover { background: #f0f7ff; color: #1d6fd8; }
+        .cs-item.selected { background: #eff6ff; color: #1d6fd8; font-weight: 600; }
+
+        .cs-check {
+            width: 14px; height: 14px;
+            background: #1d6fd8;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .cs-item.selected .cs-check { display: flex; }
+
+        .cs-no-results {
+            padding: 18px 14px;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            text-align: center;
+        }
+
+        .slot-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .opt-tag {
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            background: #f3f4f6;
+            color: var(--text-soft);
+            padding: 1px 6px;
+            border-radius: 3px;
+        }
+
+        .form-error {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .form-error.visible { display: block; }
+
+
+
+        /* ── SECTION 3: Results ────────────────────────────────────────── */
+        #section-result { background: #ffffff; }
+
+        /* Waiting state */
+        .result-waiting { text-align: center; padding: 60px 0; }
+
+        .waiting-icon {
+            width: 68px; height: 68px;
+            border: 1.5px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+        }
+
+        .waiting-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+        .waiting-sub { font-size: 0.87rem; color: var(--text-soft); }
+
+        /* Result content */
+        .result-content { display: none; }
+        .result-content.visible { display: block; }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .disease-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+            border: 1.5px solid var(--blue-mid);
+            border-radius: 14px;
+            padding: 26px;
+        }
+        .disease-card-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .pulse-dot {
+            width: 7px; height: 7px;
+            background: var(--blue);
+            border-radius: 50%;
+            animation: pulse 1.6s ease infinite;
+        }
+        .disease-name {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .symptoms-reported-card {
+            background: var(--soft);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 26px;
+        }
+        .symptoms-reported-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin-bottom: 14px;
+        }
+        .sym-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sym-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text-mid);
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .disclaimer-card {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 4px solid #f59e0b;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+        }
+        .disclaimer-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .disclaimer-body {
+            font-size: 0.84rem;
+            color: #78350f;
+            line-height: 1.6;
+        }
+
+        .consult-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 26px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .consult-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .consult-sub {
+            font-size: 0.82rem;
+            color: var(--text-mid);
+            line-height: 1.55;
+        }
+        .consult-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #ffffff;
+            color: var(--blue);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.94rem;
+            font-weight: 600;
+            padding: 13px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1.5px solid var(--blue);
+            cursor: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(29, 111, 216, 0.08);
+            letter-spacing: 0.01em;
+            width: 100%;
+        }
+        .consult-btn:hover {
+            background: var(--blue-lt);
+            border-color: var(--blue-dk);
+            color: var(--blue-dk);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(29, 111, 216, 0.18);
+        }
+        .consult-btn:active { transform: translateY(0); }
+
+        .result-actions { display: flex; gap: 12px; }
+
+        .btn-outline {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            background: #ffffff;
+            color: var(--blue);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.94rem;
+            font-weight: 600;
+            padding: 13px 22px;
+            border-radius: 10px;
+            border: 1.5px solid var(--blue);
+            cursor: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(29, 111, 216, 0.08);
+            letter-spacing: 0.01em;
+            text-decoration: none;
+        }
+        .btn-outline:hover {
+            background: var(--blue-lt);
+            border-color: var(--blue-dk);
+            color: var(--blue-dk);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(29, 111, 216, 0.18);
+        }
+        .btn-outline:active { transform: translateY(0); }
+
+        /* Spinner on analyse button */
+        .btn-primary .spinner-ring {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+        .btn-primary.loading .btn-label { display: none; }
+        .btn-primary.loading .spinner-ring { display: block; }
+
+        /* ── Animations ────────────────────────────────────────────────── */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.4; transform: scale(1.45); }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Responsive ────────────────────────────────────────────────── */
+        @media (max-width: 700px) {
+            nav { padding: 0 20px; }
+            .nav-right { gap: 16px; }
+            section { padding: 80px 20px 60px; }
+            .result-grid { grid-template-columns: 1fr; }
+            .hero-stats { gap: 28px; }
+            .consult-card { flex-direction: column; align-items: flex-start; }
+            .result-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .consult-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Custom cursor elements -->
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
+<!-- Top Navigation Header with Logo in Top Right Corner -->
+<header class="top-nav-bar" style="position: absolute; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: flex-end; padding: 28px 48px; pointer-events: none;">
+    <div style="pointer-events: auto; display: flex; align-items: center;">
+        <img src="/static/Logo.webp" alt="DiseaseSense Logo" style="height: 88px; max-height: 92px; width: auto; object-fit: contain; mix-blend-mode: multiply; filter: drop-shadow(0 4px 14px rgba(29,111,216,0.15)); transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    </div>
+</header>
+
+
+
+
+
+<!-- ================================================================
+     SECTION 1  –  HERO
+     ================================================================ -->
+<section id="section-hero">
+    <div class="section-inner">
+
+
+
+        <h1 class="hero-heading">
+            <span class="blk">Disease</span><span class="blu">Sense</span>
+            <span class="light blk">
+                Understand your symptoms.<br>
+                Informed decisions start here.
+            </span>
+        </h1>
+
+        <p class="hero-sub">
+            Take control of your health journey with instant clinical insight. Powered by medical machine learning to translate your symptoms into clear, guidance-driven answers.
+        </p>
+
+        <div class="hero-ctas">
+            <a href="#section-symptoms" class="btn-primary" onclick="smoothTo('section-symptoms')">
+                <span class="btn-label">Evaluate Your Symptoms</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-cue scroll-bottom" onclick="smoothTo('section-symptoms')">
+        <span class="scroll-cue-label">Begin Assessment</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 2  –  SYMPTOM INPUT
+     ================================================================ -->
+<section id="section-symptoms">
+    <!-- Top scroll cue back to hero -->
+    <div class="scroll-cue scroll-top" onclick="smoothTo('section-hero')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        <span class="scroll-cue-label">Back to Overview</span>
+    </div>
+
+    <div class="section-inner">
+
+        <h2 class="section-heading">How Are You <span class="blu">Feeling Today?</span></h2>
+        <p class="section-sub">
+            Tell us up to three symptoms troubling you. Our classification model will evaluate your inputs to guide your next steps.
+        </p>
+
+        <div class="symptoms-card">
+
+            <div class="step-progress">
+                <div class="step-dot" id="dot1"></div>
+                <div class="step-dot" id="dot2"></div>
+                <div class="step-dot" id="dot3"></div>
+                <span class="step-text">
+                    <span class="count" id="countText">0</span> of 3 selected
+                </span>
+            </div>
+
+            <div class="symptom-slots">
+
+                <!-- Slot 1 -->
+                <div class="slot s1" id="slot1">
+                    <div class="slot-num n1">1</div>
+                    <div class="slot-body">
+                        <div class="slot-label">What is your main concern?</div>
+                        <div class="cs-wrap" id="cs1">
+                            <button type="button" class="cs-btn" onclick="csToggle(1)">
+                                <span class="cs-display ph" id="cs1-display">Select your primary symptom...</span>
+                                <svg class="cs-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="cs-dropdown" id="cs1-dd">
+                                <div class="cs-search-box">
+                                    <svg class="cs-search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    <input id="cs1-search" type="text" class="cs-search-input" placeholder="Search symptoms..." oninput="csFilter(1, this.value)">
+                                </div>
+                                <div class="cs-list" id="cs1-list"></div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="symptom1" name="symptom1" value="none">
+                    </div>
+                </div>
+
+
+
+                <!-- Slot 2 -->
+                <div class="slot s2" id="slot2">
+                    <div class="slot-num n2">2</div>
+                    <div class="slot-body">
+                        <div class="slot-label">Any secondary discomfort? <span class="opt-tag">Optional</span></div>
+                        <div class="cs-wrap" id="cs2">
+                            <button type="button" class="cs-btn" onclick="csToggle(2)">
+                                <span class="cs-display ph" id="cs2-display">Select a secondary symptom...</span>
+                                <svg class="cs-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="cs-dropdown" id="cs2-dd">
+                                <div class="cs-search-box">
+                                    <svg class="cs-search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    <input id="cs2-search" type="text" class="cs-search-input" placeholder="Search symptoms..." oninput="csFilter(2, this.value)">
+                                </div>
+                                <div class="cs-list" id="cs2-list"></div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="symptom2" name="symptom2" value="none">
+                    </div>
+                </div>
+
+                <!-- Slot 3 -->
+                <div class="slot s3" id="slot3">
+                    <div class="slot-num n3">3</div>
+                    <div class="slot-body">
+                        <div class="slot-label">Notice any other changes? <span class="opt-tag">Optional</span></div>
+                        <div class="cs-wrap" id="cs3">
+                            <button type="button" class="cs-btn" onclick="csToggle(3)">
+                                <span class="cs-display ph" id="cs3-display">Select an additional symptom...</span>
+                                <svg class="cs-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="cs-dropdown" id="cs3-dd">
+                                <div class="cs-search-box">
+                                    <svg class="cs-search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                    <input id="cs3-search" type="text" class="cs-search-input" placeholder="Search symptoms..." oninput="csFilter(3, this.value)">
+                                </div>
+                                <div class="cs-list" id="cs3-list"></div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="symptom3" name="symptom3" value="none">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-error" id="formError">Please select at least one symptom to run the analysis.</div>
+
+            <button class="btn-primary" id="analyseBtn" onclick="submitSymptoms()" style="width:100%; justify-content:center;">
+                <span class="btn-label">Run Analysis</span>
+                <div class="spinner-ring"></div>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Scroll cue to results -->
+    <div class="scroll-cue scroll-bottom" onclick="smoothTo('section-result')">
+        <span class="scroll-cue-label">View Diagnostic Results</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 3  –  RESULTS
+     ================================================================ -->
+<section id="section-result">
+    <!-- Top scroll cue back to symptoms -->
+    <div class="scroll-cue scroll-top" onclick="smoothTo('section-symptoms')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        <span class="scroll-cue-label">Modify Symptoms</span>
+    </div>
+
+    <div class="section-inner">
+
+        <h2 class="section-heading">Analysis <span class="blu">Results</span></h2>
+        <p class="section-sub" style="margin-bottom:28px;">
+            Here is what your symptoms suggest. Based on clinical data patterns, our diagnostic model has evaluated your profile.
+        </p>
+
+        <!-- Waiting state -->
+        <div class="result-waiting" id="resultWaiting">
+            <div class="waiting-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+            </div>
+            <p class="waiting-title">Awaiting Symptom Input</p>
+            <p class="waiting-sub">Select your symptoms above to see your prediction here.</p>
+        </div>
+
+        <!-- Result content -->
+        <div class="result-content" id="resultContent">
+
+            <div class="result-grid" style="grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:14px;">
+                <!-- Left Card: Primary Predicted Condition -->
+                <div class="disease-card" style="padding:22px;">
+                    <div class="disease-card-label">
+                        <span class="pulse-dot"></span>
+                        Predicted Condition
+                    </div>
+                    <div class="disease-name" id="diseaseName" style="font-size:1.45rem;"></div>
+                    <div id="severityBadge" style="display:inline-flex; align-items:center; gap:6px; font-size:0.73rem; font-weight:700; padding:4px 10px; border-radius:6px; margin-top:8px;"></div>
+                    <!-- Creative Model Confidence Donut Chart -->
+                    <div class="confidence-wrap" style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(124,58,237,0.15); display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                        <div>
+                            <div style="font-size:0.86rem; font-weight:700; color:#7c3aed;">Model Confidence</div>
+                        </div>
+                        
+                        <!-- Donut Circle with Silver/Grey fill & Purple outline -->
+                        <div style="position:relative; width:62px; height:62px; flex-shrink:0;">
+                            <svg width="62" height="62" viewBox="0 0 64 64" style="transform: rotate(-90deg); filter:drop-shadow(0 2px 6px rgba(124,58,237,0.14));">
+                                <!-- Silver/Grey Base Fill & Border Outline -->
+                                <circle cx="32" cy="32" r="28" fill="#f8fafc" stroke="#cbd5e1" stroke-width="4.5"/>
+                                <!-- Animated Purple Progress Arc -->
+                                <circle id="confidenceDonutArc" cx="32" cy="32" r="28" fill="none" stroke="#7c3aed" stroke-width="5" stroke-linecap="round" stroke-dasharray="175.93" stroke-dashoffset="175.93" style="transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);"/>
+                            </svg>
+                            <!-- Donut Center Text -->
+                            <div id="confidenceDonutText" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:800; color:#7c3aed;">
+                                0%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: 2 Separate Cards -->
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    <!-- Card 1: Symptoms Reported -->
+                    <div class="symptoms-reported-card" style="padding:14px 18px; margin-bottom:0;">
+                        <div class="symptoms-reported-label" style="margin-bottom:8px; font-size:0.68rem;">Symptoms Reported</div>
+                        <div class="sym-tags" id="symTags"></div>
+                    </div>
+
+                    <!-- Card 2: Differential Diagnosis (DDx) -->
+                    <div style="background:#ffffff; border:1px solid var(--border); border-radius:14px; padding:14px 18px;">
+                        <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-soft); margin-bottom:8px; display:flex; align-items:center; justify-content:space-between;">
+                            <span>Differential Diagnosis (DDx)</span>
+                            <span style="font-size:0.65rem; font-weight:600; color:var(--text-soft);">Top Matches</span>
+                        </div>
+                        <div id="ddxList" style="display:grid; gap:6px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compact Medical Disclaimer -->
+            <div class="disclaimer-card" style="padding:10px 16px; margin-bottom:14px;">
+                <div class="disclaimer-title" style="font-size:0.7rem; margin-bottom:2px;">Medical Disclaimer</div>
+                <div class="disclaimer-body" style="font-size:0.78rem; line-height:1.4;">
+                    This prediction is generated by a clinical machine learning model for educational purposes only. Please consult a qualified physician for official diagnosis and personalized medical guidance.
+                </div>
+            </div>
+
+            <div class="result-actions">
+                <button class="btn-outline" onclick="resetForm()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Analyse Again
+                </button>
+                <button class="btn-outline" onclick="smoothTo('section-symptoms')">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Change Symptoms
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Scroll cue to consultation -->
+    <div class="scroll-cue scroll-bottom" onclick="smoothTo('section-consult')">
+        <span class="scroll-cue-label">Explore Care Guidance</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+</section>
+
+
+<!-- ================================================================
+     SECTION 4  –  CONSULTATION
+     ================================================================ -->
+<section id="section-consult" style="background:#f9fafb;">
+    <!-- Top scroll cue back to results -->
+    <div class="scroll-cue scroll-top" onclick="smoothTo('section-result')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+        <span class="scroll-cue-label">Review Diagnosis</span>
+    </div>
+
+    <div class="section-inner">
+
+        <h2 class="section-heading">Next Steps & <span class="blu">Care Guidance</span></h2>
+        <p class="section-sub" style="margin-bottom:32px;">
+            Connect with certified medical professionals and prepare for your clinical examination.
+        </p>
+
+        <!-- 2-Column Creative Grid -->
+        <div class="consult-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
+
+            <!-- Left Card: Specialist Recommendation -->
+            <div class="consult-card" style="margin-bottom:0; flex-direction:column; align-items:flex-start; justify-content:space-between;">
+                <div>
+                    <div class="consult-title" style="font-size:1.15rem; margin-bottom:4px;">Recommended Specialist Visit</div>
+                    <div class="consult-sub" style="margin-top:8px;">
+                        Based on your analysis results, we recommend scheduling an appointment with a:
+                    </div>
+                    <div class="specialist-badge" style="margin-top:12px; background:#f0fdf4; border:1.5px solid #bbf7d0; border-radius:8px; padding:7px 14px; display:inline-flex; align-items:center; gap:8px;">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                        <span id="specialistName" style="font-size:0.92rem; font-weight:700; color:#16a34a;">General Physician</span>
+                    </div>
+                </div>
+                <a id="findDoctorBtn" href="https://www.google.com/maps/search/General+Physician+near+me" target="_blank" rel="noopener" class="consult-btn" style="margin-top:20px; animation:bluePulse 2.4s ease-in-out infinite;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Find Nearby Specialist
+                </a>
+            </div>
+
+            <!-- Right Card: Appointment Checklist & Tailored Doctor Questions -->
+            <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:14px; padding:22px 26px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <div style="font-size:0.92rem; font-weight:700; color:var(--text); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        Appointment Preparation Checklist
+                    </div>
+                    <ul style="list-style:none; padding:0; margin:0 0 16px 0; font-size:0.82rem; color:var(--text-mid); display:grid; gap:8px;">
+                        <li style="display:flex; align-items:center; gap:8px;">
+                            <span style="width:16px; height:16px; border-radius:50%; background:#f0fdf4; color:#16a34a; font-weight:700; font-size:0.65rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">✓</span>
+                            Note onset date & symptom changes
+                        </li>
+                        <li style="display:flex; align-items:center; gap:8px;">
+                            <span style="width:16px; height:16px; border-radius:50%; background:#f0fdf4; color:#16a34a; font-weight:700; font-size:0.65rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;">✓</span>
+                            Bring your current medication & allergy records
+                        </li>
+                    </ul>
+
+                    <!-- Feature 3: Tailored Questions for Your Visit -->
+                    <div style="padding-top:12px; border-top:1px solid var(--border);">
+                        <div style="font-size:0.8rem; font-weight:700; color:var(--blue); margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            Questions to Ask Your Doctor
+                        </div>
+                        <ul id="doctorQuestionsList" style="list-style:none; padding:0; margin:0; font-size:0.78rem; color:var(--text-mid); display:grid; gap:6px;">
+                            <li style="display:flex; align-items:start; gap:6px;"><span style="color:var(--blue); font-weight:700;">•</span> What diagnostic tests do you recommend to confirm this?</li>
+                            <li style="display:flex; align-items:start; gap:6px;"><span style="color:var(--blue); font-weight:700;">•</span> What safe home care or OTC measures ease symptoms?</li>
+                            <li style="display:flex; align-items:start; gap:6px;"><span style="color:var(--blue); font-weight:700;">•</span> What warning signs require immediate emergency care?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Emergency Support Banner -->
+        <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:16px 22px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span style="font-size:0.83rem; font-weight:600; color:#92400e;">Experiencing severe, acute, or worsening symptoms?</span>
+            </div>
+            <span class="emergency-pill" style="font-size:0.8rem; font-weight:700; color:#dc2626; background:#fef2f2; border:1.5px solid #fecaca; padding:6px 14px; border-radius:8px; animation:redPulse 2.4s ease-in-out infinite;">
+                Emergency Services: 112 / 108
+            </span>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ================================================================
+     SCRIPTS
+     ================================================================ -->
+{% csrf_token %}
+
+<script>
+    // ── Custom cursor ─────────────────────────────────────────────────
+    const ring = document.getElementById('cursor-ring');
+    const dot  = document.getElementById('cursor-dot');
+
+    // Lag factor for the ring (creates a trailing effect)
+    let ringX = 0, ringY = 0, dotX = 0, dotY = 0;
+
+    document.addEventListener('mousemove', e => {
+        dotX = e.clientX;
+        dotY = e.clientY;
+        // Move the inner dot instantly
+        dot.style.left = dotX + 'px';
+        dot.style.top  = dotY + 'px';
+    });
+
+    // Animate the outer ring with a subtle lag
+    function animateRing() {
+        ringX += (dotX - ringX) * 0.14;
+        ringY += (dotY - ringY) * 0.14;
+        ring.style.left = ringX + 'px';
+        ring.style.top  = ringY + 'px';
+        requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // ── Symptoms data (from Django template) ──────────────────────────
+    const SYMPTOMS = [{% for s in symptoms %}{"value":"{{ s.value }}","label":"{{ s.label }}"},{% endfor %}];
+
+    // ── Custom searchable dropdown functions ────────────────────────
+
+    function csRenderList(n, items) {
+        const list = document.getElementById('cs' + n + '-list');
+        const curVal = document.getElementById('symptom' + n).value;
+        list.innerHTML = '';
+        if (items.length === 0) {
+            list.innerHTML = '<div class="cs-no-results">No symptoms found</div>';
+            return;
+        }
+        items.forEach(s => {
+            const div = document.createElement('div');
+            div.className = 'cs-item' + (s.value === curVal ? ' selected' : '');
+            div.innerHTML = `<span>${s.label}</span><span class="cs-check"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>`;
+            div.addEventListener('click', () => csSelect(n, s.value, s.label));
+            list.appendChild(div);
+        });
+    }
+
+    function csToggle(n) {
+        const wrap = document.getElementById('cs' + n);
+        const isOpen = wrap.classList.contains('open');
+        // Close all first
+        [1,2,3].forEach(i => {
+            document.getElementById('cs' + i).classList.remove('open');
+            document.getElementById('slot' + i).classList.remove('active');
+        });
+        if (!isOpen) {
+            wrap.classList.add('open');
+            document.getElementById('slot' + n).classList.add('active');
+            document.getElementById('cs' + n + '-search').value = '';
+            csRenderList(n, SYMPTOMS);
+            setTimeout(() => document.getElementById('cs' + n + '-search').focus(), 60);
+        }
+    }
+
+    function csFilter(n, query) {
+        const q = query.trim().toLowerCase();
+        csRenderList(n, q ? SYMPTOMS.filter(s => s.label.toLowerCase().includes(q)) : SYMPTOMS);
+    }
+
+    function csSelect(n, value, label) {
+        document.getElementById('symptom' + n).value = value;
+        const display = document.getElementById('cs' + n + '-display');
+        display.textContent = label;
+        display.classList.remove('ph');
+        document.getElementById('cs' + n).classList.remove('open');
+        document.getElementById('slot' + n).classList.remove('active');
+        onSelectChange();
+    }
+
+    // Close all dropdowns when clicking outside
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.slot')) {
+            [1,2,3].forEach(i => {
+                document.getElementById('cs' + i).classList.remove('open');
+                document.getElementById('slot' + i).classList.remove('active');
+            });
+        }
+    });
+
+    // Initial list render
+    [1,2,3].forEach(n => csRenderList(n, SYMPTOMS));
+
+    // Expand ring on hoverable elements
+    const hoverTargets = 'a, button, select, .slot, .scroll-cue, .nav-btn, .btn-primary, .btn-outline, .consult-btn, .cs-item, .cat-pill';
+    document.querySelectorAll(hoverTargets).forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    // ── Smooth scroll helper ──────────────────────────────────────────
+    function smoothTo(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Intercept ALL anchor clicks that point to #hash targets
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+
+
+    // ── Progress dots ─────────────────────────────────────────────────
+    function onSelectChange() {
+        const vals = [
+            document.getElementById('symptom1').value,
+            document.getElementById('symptom2').value,
+            document.getElementById('symptom3').value,
+        ];
+        const filled = vals.filter(v => v && v !== 'none').length;
+        document.getElementById('countText').textContent = filled;
+        ['dot1','dot2','dot3'].forEach((id, i) => {
+            document.getElementById(id).classList.toggle('filled', vals[i] !== 'none');
+        });
+        if (filled > 0) document.getElementById('formError').classList.remove('visible');
+    }
+
+    // ── CSRF helper ───────────────────────────────────────────────────
+    function getCsrf() {
+        for (const c of document.cookie.split(';')) {
+            const [k, v] = c.trim().split('=');
+            if (k === 'csrftoken') return decodeURIComponent(v);
+        }
+        return '';
+    }
+
+    // ── Submit via AJAX ───────────────────────────────────────────────
+    function submitSymptoms() {
+        const s1 = document.getElementById('symptom1').value;
+        const s2 = document.getElementById('symptom2').value;
+        const s3 = document.getElementById('symptom3').value;
+
+        if ([s1, s2, s3].filter(v => v && v !== 'none').length === 0) {
+            document.getElementById('formError').classList.add('visible');
+            return;
+        }
+
+        const btn = document.getElementById('analyseBtn');
+        btn.classList.add('loading');
+        btn.disabled = true;
+
+        fetch('/predict/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCsrf(),
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ symptom1: s1, symptom2: s2, symptom3: s3 }).toString(),
+        })
+        .then(r => r.json())
+        .then(data => {
+            btn.classList.remove('loading');
+            btn.disabled = false;
+            if (data.error) {
+                document.getElementById('formError').textContent = data.error;
+                document.getElementById('formError').classList.add('visible');
+                return;
+            }
+            showResults(data.disease, data.symptoms, data.specialist, data.confidence, data.severity, data.top3, data.doctor_questions);
+        })
+        .catch(() => {
+            btn.classList.remove('loading');
+            btn.disabled = false;
+            document.getElementById('formError').textContent = 'An error occurred. Please try again.';
+            document.getElementById('formError').classList.add('visible');
+        });
+    }
+
+    // ── Render results ────────────────────────────────────────────────
+    let hasAnimatedSection3 = false;
+    window.activeResultsData = null;
+
+    function animateCountUp(el, targetVal, suffix = '% Match', duration = 1200) {
+        if (!el) return;
+        let startTime = null;
+        function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = Math.min(timestamp - startTime, duration);
+            const progress = easeOut(elapsed / duration);
+            const current = Math.floor(progress * targetVal);
+            el.textContent = current + suffix;
+            if (elapsed < duration) {
+                requestAnimationFrame(step);
+            } else {
+                el.textContent = targetVal + suffix;
+            }
+        }
+        requestAnimationFrame(step);
+    }
+
+    function startSection3Animations() {
+        if (hasAnimatedSection3 || !window.activeResultsData) return;
+        hasAnimatedSection3 = true;
+
+        const { confidence } = window.activeResultsData;
+        const conf = confidence || 92;
+
+        // Donut Pie Chart Arc & Center Percentage Animation
+        const donutArc = document.getElementById('confidenceDonutArc');
+        const donutText = document.getElementById('confidenceDonutText');
+        if (donutArc && donutText) {
+            const offset = 175.93 - (175.93 * conf / 100);
+            donutArc.style.strokeDashoffset = offset;
+            animateCountUp(donutText, conf, '%', 1200);
+        }
+    }
+
+    // Scroll-triggered IntersectionObserver for Section 3
+    const sec3Observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startSection3Animations();
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const sec3El = document.getElementById('section-result');
+        if (sec3El) sec3Observer.observe(sec3El);
+    });
+
+    function showResults(disease, symptoms, specialist, confidence, severity, top3, doctorQuestions) {
+        hasAnimatedSection3 = false;
+        const conf = confidence || 92;
+        window.activeResultsData = { confidence: conf, top3: top3 };
+
+        document.getElementById('diseaseName').textContent = disease;
+
+        if (severity) {
+            const badge = document.getElementById('severityBadge');
+            badge.style.color = severity.color;
+            badge.style.background = severity.bg;
+            badge.style.border = '1px solid ' + severity.border;
+            if (severity.level === 'High') {
+                badge.style.animation = 'redPulse 2.4s ease-in-out infinite';
+            } else {
+                badge.style.animation = 'none';
+            }
+            badge.innerHTML = `<span style="width:6px; height:6px; border-radius:50%; background:${severity.color};"></span>${severity.text}`;
+        }
+
+        // Reset Donut Arc & Center Text before scrolling
+        const donutArc = document.getElementById('confidenceDonutArc');
+        const donutText = document.getElementById('confidenceDonutText');
+        if (donutArc && donutText) {
+            donutArc.style.strokeDashoffset = '175.93';
+            donutText.textContent = '0%';
+        }
+
+        const specName = specialist || 'General Physician';
+        document.getElementById('specialistName').textContent = specName;
+        const searchUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(specName + ' near me');
+        document.getElementById('findDoctorBtn').href = searchUrl;
+
+        const tags = document.getElementById('symTags');
+        tags.innerHTML = '';
+        symptoms.forEach(s => {
+            const tag = document.createElement('div');
+            tag.className = 'sym-tag';
+            tag.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1d6fd8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>${s}`;
+            tags.appendChild(tag);
+        });
+
+        // Render Differential Diagnosis (Top 3 Matches - Purple #1, Blue #2, Slate #3)
+        const ddxList = document.getElementById('ddxList');
+        if (ddxList) {
+            ddxList.innerHTML = '';
+            const list = top3 && top3.length > 0 ? top3 : [{ disease: disease, confidence: conf }];
+            
+            const rankStyles = [
+                { numColor: '#7c3aed', numText: '#1', bg: '#f3e8ff', border: '#e9d5ff', text: '#4c1d95', matchColor: '#7c3aed' },   // #1 Purple / Violet
+                { numColor: '#1d6fd8', numText: '#2', bg: '#eff6ff', border: '#bfdbfe', text: '#1e3a8a', matchColor: '#1d6fd8' },   // #2 Medical Blue
+                { numColor: '#475569', numText: '#3', bg: '#f8fafc', border: '#cbd5e1', text: '#1e293b', matchColor: '#475569' }    // #3 Slate Silver
+            ];
+
+            list.forEach((item, idx) => {
+                const s = rankStyles[idx] || rankStyles[1];
+                const row = document.createElement('div');
+                row.style.cssText = `display:flex; align-items:center; justify-content:space-between; font-size:0.76rem; padding:6px 10px; background:${s.bg}; border:1px solid ${s.border}; border-radius:6px;`;
+                row.innerHTML = `<div><span style="color:${s.numColor}; font-weight:800; margin-right:6px; font-size:0.8rem;">${s.numText}</span><span style="font-weight:700; color:${s.text};">${item.disease}</span></div><span style="font-weight:800; color:${s.matchColor};">${item.confidence}% Match</span>`;
+                ddxList.appendChild(row);
+            });
+        }
+
+        // Render Feature 3: Tailored Questions for Your Doctor
+        const questionsList = document.getElementById('doctorQuestionsList');
+        if (questionsList && doctorQuestions && doctorQuestions.length > 0) {
+            questionsList.innerHTML = '';
+            doctorQuestions.forEach(q => {
+                const li = document.createElement('li');
+                li.style.cssText = 'display:flex; align-items:start; gap:6px;';
+                li.innerHTML = `<span style="color:var(--blue); font-weight:700;">•</span> ${q}`;
+                questionsList.appendChild(li);
+            });
+        }
+
+        document.getElementById('resultWaiting').style.display = 'none';
+        document.getElementById('resultContent').classList.add('visible');
+
+        setTimeout(() => {
+            smoothTo('section-result');
+            // Trigger animation after smooth scroll starts/lands
+            setTimeout(startSection3Animations, 300);
+        }, 150);
+    }
+
+    // ── Reset ─────────────────────────────────────────────────────────
+    const DEFAULT_PH = [
+        "Select your primary symptom...",
+        "Select a secondary symptom...",
+        "Select an additional symptom..."
+    ];
+
+    function resetForm() {
+        hasAnimatedSection3 = false;
+        window.activeResultsData = null;
+        const donutArc = document.getElementById('confidenceDonutArc');
+        if (donutArc) donutArc.style.strokeDashoffset = '175.93';
+        const donutText = document.getElementById('confidenceDonutText');
+        if (donutText) donutText.textContent = '0%';
+
+        [1, 2, 3].forEach(i => {
+            document.getElementById('symptom' + i).value = 'none';
+            const display = document.getElementById('cs' + i + '-display');
+            display.textContent = DEFAULT_PH[i - 1];
+            display.classList.add('ph');
+        });
+        updateSmartSuggestions('none');
+        onSelectChange();
+        document.getElementById('resultContent').classList.remove('visible');
+        document.getElementById('resultWaiting').style.display = '';
+        document.getElementById('formError').classList.remove('visible');
+        smoothTo('section-symptoms');
+    }
+
+    // ── Section scroll observer: updates tab title + URL hash ────────────────
+    const sectionMeta = {
+        'section-hero':     { title: 'DiseaseSense | Symptom Checker',  hash: '' },
+        'section-symptoms': { title: 'DiseaseSense | Analyse Symptoms', hash: 'symptoms' },
+        'section-result':   { title: 'DiseaseSense | Results',          hash: 'results' },
+        'section-consult':  { title: 'DiseaseSense | Consultation',     hash: 'consult' },
+    };
+
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const meta = sectionMeta[entry.target.id];
+                if (!meta) return;
+                document.title = meta.title;
+                const url = meta.hash ? ('/' + meta.hash) : '/';
+                history.replaceState(null, '', url);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+</script>
+
+</body>
+</html>

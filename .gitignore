@@ -1,0 +1,25 @@
+# Python / Virtual Environment
+__pycache__/
+*.py[cod]
+*$py.class
+Scripts/
+Include/
+Lib/
+pyvenv.cfg
+venv/
+.venv/
+env/
+
+# OS / System
+desktop.ini
+.DS_Store
+Thumbs.db
+
+# Django
+*.log
+local_settings.py
+
+# IDE / Editors
+.vscode/
+.idea/
+*.swp
