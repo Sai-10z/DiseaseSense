@@ -59,7 +59,7 @@ The snapshots below demonstrate the complete DiseaseSense workflow, from the ini
 The landing page introduces DiseaseSense and allows users to begin a symptom assessment.
 
 <p align="center">
-  <img src="./Snapshots/home.webp" width="800">
+  <img src="./Snapshots/home.jpg" width="800">
 </p>
 
 ---
@@ -69,7 +69,7 @@ The landing page introduces DiseaseSense and allows users to begin a symptom ass
 Users can select up to three symptoms through interactive searchable fields before running the analysis.
 
 <p align="center">
-  <img src="./Snapshots/symptoms.webp" width="800">
+  <img src="./Snapshots/symptoms.jpg" width="800">
 </p>
 
 ---
@@ -79,7 +79,7 @@ Users can select up to three symptoms through interactive searchable fields befo
 Displays the predicted condition, model confidence, reported symptoms, and Top 3 model predictions.
 
 <p align="center">
-  <img src="./Snapshots/results.webp" width="800">
+  <img src="./Snapshots/results.jpg" width="800">
 </p>
 
 ---
@@ -89,7 +89,7 @@ Displays the predicted condition, model confidence, reported symptoms, and Top 3
 Provides specialist recommendations, appointment preparation guidance, consultation questions, and emergency-care guidance.
 
 <p align="center">
-  <img src="./Snapshots/consult.webp" width="800">
+  <img src="./Snapshots/consult.jpg" width="800">
 </p>
 
 
@@ -195,10 +195,10 @@ DiseaseSense/
 ├── README.md                                 # Project documentation
 ├── requirements.txt                          # Python dependencies
 ├── Snapshots/                              # Application Snapshots
-│   ├── home.webp
-│   ├── symptoms.webp
-│   ├── results.webp
-│   └── consult.webp
+│   ├── home.jpg
+│   ├── symptoms.jpg
+│   ├── results.jpg
+│   └── consult.jpg
 │
 └── app/
     ├── manage.py                             # Django management script
@@ -217,8 +217,8 @@ DiseaseSense/
     │   └── index.html                        # Main application interface
     │
     └── static/
-        ├── Logo.webp                         # Application logo
-        └── Favicon.webp                      # Browser favicon
+        ├── Logo.jpg                         # Application logo
+        └── Favicon.jpg                      # Browser favicon
 ```
 
 ---
