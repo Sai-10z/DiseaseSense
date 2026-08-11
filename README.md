@@ -50,48 +50,33 @@ DiseaseSense combines machine learning predictions with simple clinical guidance
 
 ---
 
-## 📸 Project Snapshots
+📸 Project Snapshots
 
 The snapshots below demonstrate the complete DiseaseSense workflow, from the initial landing page and symptom selection to machine learning results and personalized care guidance.
 
-### 1. 🏠 Home / Landing Page
+1. 🏠 Home / Landing Page
 
 The landing page introduces DiseaseSense and allows users to begin a symptom assessment.
 
-<p align="center">
-  <img src="./Snapshots/home.jpg" width="800">
-</p>
+<p align="center"> <img src="./Snapshots/home.png" alt="DiseaseSense Home / Landing Page" width="1000"> </p>
 
----
-
-### 2. 🩺 Symptom Analysis
+2. 🩺 Symptom Analysis
 
 Users can select up to three symptoms through interactive searchable fields before running the analysis.
 
-<p align="center">
-  <img src="./Snapshots/symptoms.jpg" width="800">
-</p>
+<p align="center"> <img src="./Snapshots/symptoms.png" alt="DiseaseSense Symptom Analysis" width="1000"> </p>
 
----
-
-### 3. 📊 Analysis Results
+3. 📊 Analysis Results
 
 Displays the predicted condition, model confidence, reported symptoms, and Top 3 model predictions.
 
-<p align="center">
-  <img src="./Snapshots/results.jpg" width="800">
-</p>
+<p align="center"> <img src="./Snapshots/results.png" alt="DiseaseSense Analysis Results" width="1000"> </p>
 
----
-
-### 4. 👨‍⚕️ Care Guidance & Specialist Recommendation
+4. 👨‍⚕️ Care Guidance & Specialist Recommendation
 
 Provides specialist recommendations, appointment preparation guidance, consultation questions, and emergency-care guidance.
 
-<p align="center">
-  <img src="./Snapshots/consult.jpg" width="800">
-</p>
-
+<p align="center"> <img src="./Snapshots/consult.png" alt="DiseaseSense Care Guidance and Specialist Recommendation" width="1000"> </p>
 
 ---
 
