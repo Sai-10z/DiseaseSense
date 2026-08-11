@@ -50,19 +50,48 @@ DiseaseSense combines machine learning predictions with simple clinical guidance
 
 ---
 
-# 📸 Project Snapshots
+## 📸 Project Snapshots
 
-The Snapshots below demonstrate the complete DiseaseSense workflow, from the initial landing page and symptom selection to machine learning results and personalized care guidance.
+The snapshots below demonstrate the complete DiseaseSense workflow, from the initial landing page and symptom selection to machine learning results and personalized care guidance.
 
-| **Home / Landing Page** | **Symptom Analysis** |
-| :---: | :---: |
-| ![DiseaseSense Home](Snapshots/home.webp) | ![DiseaseSense Symptom Analysis](Snapshots/symptoms.webp) |
-| The landing page introduces DiseaseSense and allows users to begin a symptom assessment. | Users can select up to three symptoms through interactive searchable fields before running the analysis. |
+### 1. 🏠 Home / Landing Page
 
-| **Analysis Results** | **Care Guidance & Specialist Recommendation** |
-| :---: | :---: |
-| ![DiseaseSense Analysis Results](Snapshots/results.webp) | ![DiseaseSense Care Guidance](Snapshots/consult.webp) |
-| Displays the predicted condition, model confidence, reported symptoms, and Top 3 model predictions. | Provides specialist recommendations, appointment preparation guidance, consultation questions, and emergency-care guidance. |
+The landing page introduces DiseaseSense and allows users to begin a symptom assessment.
+
+<p align="center">
+  <img src="./Snapshots/home.webp" width="800">
+</p>
+
+---
+
+### 2. 🩺 Symptom Analysis
+
+Users can select up to three symptoms through interactive searchable fields before running the analysis.
+
+<p align="center">
+  <img src="./Snapshots/symptoms.webp" width="800">
+</p>
+
+---
+
+### 3. 📊 Analysis Results
+
+Displays the predicted condition, model confidence, reported symptoms, and Top 3 model predictions.
+
+<p align="center">
+  <img src="./Snapshots/results.webp" width="800">
+</p>
+
+---
+
+### 4. 👨‍⚕️ Care Guidance & Specialist Recommendation
+
+Provides specialist recommendations, appointment preparation guidance, consultation questions, and emergency-care guidance.
+
+<p align="center">
+  <img src="./Snapshots/consult.webp" width="800">
+</p>
+
 
 ---
 
