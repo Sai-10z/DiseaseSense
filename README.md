@@ -50,9 +50,9 @@ DiseaseSense combines machine learning predictions with simple clinical guidance
 
 ---
 
-## 📸 Project Snapshots
+# 📸 Project Snapshots
 
-The screenshots below demonstrate the complete **DiseaseSense** workflow, from the landing page and symptom selection to machine learning predictions and personalized care guidance.
+The screenshots below showcase the complete **DiseaseSense** workflow, from symptom selection to AI-powered disease prediction and care guidance.
 
 ### 🏠 1. Home / Landing Page
 
