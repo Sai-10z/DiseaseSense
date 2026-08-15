@@ -1,52 +1,21 @@
-# 🧬 DiseaseSense – Machine Learning Symptom Analysis System
+# 🧬 DiseaseSense : Machine Learning Symptom Analysis System
 
-DiseaseSense is a machine learning web application built with **Python**, **Django**, and **Scikit-Learn** that predicts potential diseases based on user-selected symptoms.
-It combines a trained machine learning model with simple clinical guidance to help users better understand their symptoms before consulting a healthcare professional.
+**DiseaseSense** is a machine learning web application built with **Python**, **Django**, and **Scikit-Learn** that predicts potential disease classes based on user-selected symptoms. It combines machine learning predictions with basic clinical guidance to help users better understand their symptoms before consulting a healthcare professional.
 
-### ✨ Highlights
+---
 
-- Disease prediction
-- Top 3 predicted conditions
-- Confidence Score
-- Urgency assessment
-- Specialist recommendation
-- Nearby specialist search
-- Appointment preparation checklist
-- Suggested questions for the doctor
+## ✨ Highlights
+
+- 🩺 Disease prediction from selected symptoms
+- 🎯 Top 3 predicted conditions
+- 📊 Prediction probability
+- 🚨 Urgency assessment
+- 👨‍⚕️ Specialist recommendation
+- 📍 Nearby specialist search
+- 📋 Appointment preparation guidance
+- 💬 Suggested questions for doctors
 
 The prediction model was trained on a dataset containing **132 symptoms** across **41 disease classes**. After comparing multiple machine learning algorithms, **Logistic Regression** was selected for its speed, interpretability, and consistent performance.
-
----
-
-# 🚀 Tech Stack
-
-| Category | Technologies |
-|----------|--------------|
-| **Programming Language** | Python |
-| **Backend** | Django |
-| **Machine Learning** | Scikit-Learn, Pandas, NumPy |
-| **Frontend** | HTML5, CSS3, JavaScript |
-| **Data Visualization** | Matplotlib, Seaborn |
-| **Model Serialization** | Joblib |
-| **Development Tools** | Jupyter Notebook, VS Code, Git |
-| **Dataset** | `Training.csv` (132 Symptoms • 41 Disease Classes) |
-
----
-
-# ✨ Core Features
-
-DiseaseSense combines machine learning predictions with simple clinical guidance to help users better understand their symptoms.
-
-| Feature | Description |
-|---------|-------------|
-| Disease Prediction | Predicts possible diseases from selected symptoms. |
-| Top 3 Predictions | Displays the three most probable conditions. |
-| Confidence Score | Shows the model's confidence for the primary prediction. |
-| Urgency Indicator | Categorizes conditions as High, Moderate, or Low urgency. |
-| Specialist Recommendation | Suggests the most relevant medical specialist. |
-| Nearby Specialist Search | Opens Google Maps to find nearby specialists. |
-| Appointment Checklist | Helps users prepare before visiting a doctor. |
-| Consultation Questions | Suggests useful questions to ask during the consultation. |
 
 ---
 
@@ -94,52 +63,71 @@ Based on the prediction, DiseaseSense provides **specialist recommendations**, *
 
 ---
 
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+| --- | --- |
+| **Language** | Python |
+| **Backend** | Django |
+| **Machine Learning** | Scikit-Learn, Pandas, NumPy |
+| **Frontend** | HTML5, CSS3, JavaScript |
+| **Visualization** | Matplotlib, Seaborn |
+| **Model Serialization** | Joblib |
+| **Development Tools** | Jupyter Notebook, VS Code, Git |
+| **Dataset** | Training.csv — 132 Symptoms, 41 Disease Classes |
+
+---
+
+# ✨ Core Features
+
+DiseaseSense combines machine learning predictions with simple clinical guidance to help users better understand their symptoms.
+
+## ✨ Core Features
+
+| Feature | Description |
+| --- | --- |
+| **Disease Prediction** | Predicts potential disease classes from selected symptoms using a trained ML model. |
+| **Top 3 Predictions** | Displays the three highest-probability predictions. |
+| **Prediction Probability** | Shows the model's estimated probability for the primary prediction. |
+| **Urgency Assessment** | Categorizes predicted conditions into High, Moderate, or Low urgency. |
+| **Specialist Recommendation** | Suggests a relevant medical specialist based on the prediction. |
+| **Nearby Specialist Search** | Uses Google Maps to help locate nearby specialists. |
+| **Appointment Guidance** | Provides preparation tips and suggested questions for a doctor consultation. |
+
+---
+
 # 🏗️ Workflow & Prediction Pipeline
 
 The following workflow shows how user input moves through the prediction pipeline before the final results are displayed.
 
 ```text
+## 🏗️ Workflow & Prediction Pipeline
+
+```text
 👤 User Selects Symptoms
-        │
-        ▼
-🔍 Symptom Validation & Processing
-        │
-        ▼
+        ↓
+🧹 Symptom Validation & Processing
+        ↓
 ⚙️ Feature Vectorization
-(132-Symptom Feature Space)
-        │
-        ▼
+        ↓
 🧠 Logistic Regression Model
-(model.joblib)
-        │
-        ▼
+        ↓
 📊 Probability Estimation
-(predict_proba)
-        │
-        ▼
-🎯 Prediction Ranking
- ├── Primary Prediction
- └── Top 3 Model Predictions
-        │
-        ▼
+        ↓
+🎯 Top 3 Predictions
+        ↓
 🩺 Clinical Guidance
- ├── Urgency Assessment
- ├── Specialist Recommendation
- ├── Nearby Specialist Search
- ├── Appointment Checklist
- └── Consultation Questions
-        │
-        ▼
-🌐 Results Interface
+        ↓
+🌐 Final Results
 ```
 
 ---
 
 # 🧪 Machine Learning Models & Evaluation
 
-DiseaseSense uses supervised multi-class classification to predict diseases from symptom-based feature vectors.
+DiseaseSense uses supervised multi-class classification to predict disease classes from symptom-based feature vectors.
 
-Multiple machine learning models were trained and compared before selecting the final model for the application.
+Multiple models were trained and compared:
 
 ## 📊 Model Performance Comparison
 
@@ -152,72 +140,48 @@ Multiple machine learning models were trained and compared before selecting the 
 | Random Forest                 |      97.62% |
 | Gradient Boosting             |      97.62% |
 
-> **Important:** These results were obtained using the project's dataset and evaluation methodology. They do **not** represent real-world clinical diagnostic accuracy and should not be interpreted as medical reliability.
+**Logistic Regression** was selected for deployment due to its fast inference, interpretability, low computational overhead, and support for `predict_proba()`.
 
-## 🏆 Selected Model
+The trained model is serialized using **Joblib** and integrated with the Django backend.
 
-Although Logistic Regression, KNN, and Naïve Bayes achieved the highest accuracy, **Logistic Regression** was chosen for deployment because it offers:
-
-- Fast inference
-- Good interpretability
-- Low computational overhead
-- Efficient model storage with Joblib
-- Native probability estimation using `predict_proba()`
-
-The trained model is saved as `model.joblib` and loaded by the Django application for real-time predictions.
+> **Note:** The reported accuracy is based on the project's dataset and evaluation methodology and does not represent real-world clinical diagnostic accuracy.
 
 ---
 
-## 🛠️ Implementation Highlights
-
-The project includes the following key components:
-
-- Performed data preprocessing and exploratory data analysis (EDA).
-- Trained and compared multiple machine learning models.
-- Deployed the Logistic Regression model using Joblib.
-- Built the prediction pipeline for real-time inference.
-- Used `predict_proba()` to rank the Top 3 predicted conditions.
-- Integrated the model with a Django backend.
-- Designed a responsive single-page interface.
-- Added specialist recommendations and consultation support.
-- Integrated Google Maps for nearby specialists.
-- Included medical disclaimers and emergency information.
-
----
-
-# 📂 Repository Structure
+## 📂 Repository Structure
 
 ```text
 DiseaseSense/
 │
-├── Disease_Prediction_Model_Training.ipynb   Model training and evaluation
-├── README.md                                 # Project documentation
-├── requirements.txt                          # Python dependencies
-├── Snapshots/                              # Application Snapshots
+├── Disease_Prediction_Model_Training.ipynb
+├── Snapshots/
 │   ├── home.jpg
 │   ├── symptoms.jpg
 │   ├── results.jpg
 │   └── consult.jpg
 │
-└── app/
-    ├── manage.py                             # Django management script
-    ├── Training.csv                          # Training dataset
-    ├── model.joblib                          # Serialized ML model
-    ├── retrain_model.py                      # Model retraining utility
-    │
-    ├── backend/
-    │   ├── settings.py                       # Django configuration
-    │   ├── urls.py                           # URL routing
-    │   ├── views.py                          # Prediction logic
-    │   ├── wsgi.py                           # WSGI entry point
-    │   └── asgi.py                           # ASGI entry point
-    │
-    ├── templates/
-    │   └── index.html                        # Main application interface
-    │
-    └── static/
-        ├── Logo.jpg                         # Application logo
-        └── Favicon.jpg                      # Browser favicon
+├── app/
+│   ├── manage.py
+│   ├── Training.csv
+│   ├── model.joblib
+│   ├── retrain_model.py
+│   │
+│   ├── backend/
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   ├── wsgi.py
+│   │   └── asgi.py
+│   │
+│   ├── templates/
+│   │   └── index.html
+│   │
+│   └── static/
+│       ├── Logo.jpg
+│       └── Favicon.jpg
+│
+├── requirements.txt
+└── README.md
 ```
 
 ---
@@ -269,19 +233,13 @@ python manage.py runserver
 
 ## 6️⃣ Open the Application
 
-Open your browser and visit:
-
-```text
-http://127.0.0.1:8000/
+```bash
+Open your browser and visit: http://127.0.0.1:8000/
 ```
-
-The application should now be running locally.
 
 ---
 
-# 🔮 Future Enhancements
-
-Some features planned for future versions of DiseaseSense include:
+# 🔮 Future Improvements
 
 - Explainable AI (XAI) to show how symptoms influence predictions
 - Symptom tracking to monitor changes over time
@@ -293,22 +251,18 @@ Some features planned for future versions of DiseaseSense include:
 
 ---
 
-# ⚙️ Current Limitations
+## ⚙️ Limitations
 
-DiseaseSense is an educational project and has the following limitations:
-
-- The model is trained on a single symptom dataset and has **not** been clinically validated.
-- Users can currently select a maximum of **three symptoms**, which does not reflect real clinical assessments.
-- High accuracy on the project dataset does **not** guarantee similar performance in real-world medical scenarios.
-- The application does not consider patient history, age, medications, laboratory results, or other clinical factors.
-- Urgency levels and specialist recommendations are based on predefined application logic rather than medical validation.
+- Trained on a single symptom dataset and not clinically validated.
+- Currently limited to a maximum of three selected symptoms.
+- Does not consider patient history, medications, laboratory results, or other clinical factors.
+- Urgency and specialist recommendations are based on predefined application logic.
 - Nearby specialist search depends on external map services.
 
 ---
 
-# ⚠️ Disclaimer
+## ⚠️ Disclaimer
 
-DiseaseSense is an educational Machine Learning project developed for learning and demonstration purposes. The predictions and guidance provided by this application are **not** intended to replace professional medical advice, diagnosis, or treatment.
-Always consult a qualified healthcare professional for medical concerns. In case of a medical emergency, contact your local emergency services immediately.
+DiseaseSense is an **academic machine learning project** developed for learning and demonstration purposes. Its predictions and guidance are estimates and **not a substitute for professional medical diagnosis, treatment, or advice**. Always consult a qualified healthcare professional for medical concerns.
 
 ---
