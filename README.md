@@ -15,8 +15,6 @@
 - 📋 Appointment preparation guidance
 - 💬 Suggested questions for doctors
 
-The prediction model was trained on a dataset containing **132 symptoms** across **41 disease classes**. After comparing multiple machine learning algorithms, **Logistic Regression** was selected for its speed, interpretability, and consistent performance.
-
 ---
 
 # 📸 Project Snapshots
@@ -78,11 +76,9 @@ Based on the prediction, DiseaseSense provides **specialist recommendations**, *
 
 ---
 
-# ✨ Core Features
+## ✨ Core Features
 
 DiseaseSense combines machine learning predictions with simple clinical guidance to help users better understand their symptoms.
-
-## ✨ Core Features
 
 | Feature | Description |
 | --- | --- |
@@ -123,13 +119,13 @@ The following workflow shows how user input moves through the prediction pipelin
 
 ---
 
-# 🧪 Machine Learning Models & Evaluation
+## 🧪 Machine Learning
 
 DiseaseSense uses supervised multi-class classification to predict disease classes from symptom-based feature vectors.
 
-Multiple models were trained and compared:
+The model was trained on **132 symptoms** across **41 disease classes**. After comparing multiple machine learning algorithms, **Logistic Regression** was selected for deployment due to its speed, interpretability, low computational overhead, and support for `predict_proba()`.
 
-## 📊 Model Performance Comparison
+### 📊 Model Performance Comparison
 
 | Model                         |    Accuracy |
 | ----------------------------- | ----------: |
