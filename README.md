@@ -186,7 +186,7 @@ Follow the steps below to set up and run DiseaseSense locally.
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/DiseaseSense.git
+git clone https://github.com/Sai-10z/DiseaseSense.git
 cd DiseaseSense
 ```
 
