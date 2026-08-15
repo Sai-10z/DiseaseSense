@@ -97,9 +97,6 @@ DiseaseSense combines machine learning predictions with simple clinical guidance
 The following workflow shows how user input moves through the prediction pipeline before the final results are displayed.
 
 ```text
-## 🏗️ Workflow & Prediction Pipeline
-
-```text
 👤 User Selects Symptoms
         ↓
 🧹 Symptom Validation & Processing
