@@ -141,44 +141,6 @@ The trained model is serialized using **Joblib** and integrated with the Django 
 
 ---
 
-## 📂 Repository Structure
-
-```text
-DiseaseSense/
-│
-├── Disease_Prediction_Model_Training.ipynb
-├── Snapshots/
-│   ├── home.jpg
-│   ├── symptoms.jpg
-│   ├── results.jpg
-│   └── consult.jpg
-│
-├── app/
-│   ├── manage.py
-│   ├── Training.csv
-│   ├── model.joblib
-│   ├── retrain_model.py
-│   │
-│   ├── backend/
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   ├── views.py
-│   │   ├── wsgi.py
-│   │   └── asgi.py
-│   │
-│   ├── templates/
-│   │   └── index.html
-│   │
-│   └── static/
-│       ├── Logo.jpg
-│       └── Favicon.jpg
-│
-├── requirements.txt
-└── README.md
-```
-
----
-
 ## 🚀 Getting Started
 
 Follow the steps below to set up and run DiseaseSense locally.
@@ -226,6 +188,44 @@ python manage.py runserver
 
 ```bash
 Open your browser and visit: http://127.0.0.1:8000/
+```
+
+---
+
+## 📂 Repository Structure
+
+```text
+DiseaseSense/
+│
+├── Disease_Prediction_Model_Training.ipynb
+├── Snapshots/
+│   ├── home.jpg
+│   ├── symptoms.jpg
+│   ├── results.jpg
+│   └── consult.jpg
+│
+├── app/
+│   ├── manage.py
+│   ├── Training.csv
+│   ├── model.joblib
+│   ├── retrain_model.py
+│   │
+│   ├── backend/
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── views.py
+│   │   ├── wsgi.py
+│   │   └── asgi.py
+│   │
+│   ├── templates/
+│   │   └── index.html
+│   │
+│   └── static/
+│       ├── Logo.jpg
+│       └── Favicon.jpg
+│
+├── requirements.txt
+└── README.md
 ```
 
 ---
