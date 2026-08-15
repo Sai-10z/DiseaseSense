@@ -257,3 +257,18 @@ DiseaseSense/
 DiseaseSense is an **academic machine learning project** developed for learning and demonstration purposes. Its predictions and guidance are estimates and **not a substitute for professional medical diagnosis, treatment, or advice**. Always consult a qualified healthcare professional for medical concerns.
 
 ---
+
+## 👨‍💻 Internship Project
+
+DiseaseSense was developed during my internship as a **Machine Learning and Full-Stack Development project**.
+
+### Responsibilities
+
+- Performed data preprocessing, EDA, and model comparison.
+- Selected and deployed **Logistic Regression** for disease prediction.
+- Built the Django backend and integrated the trained ML model.
+- Developed the symptom analysis and prediction interface.
+- Implemented Top 3 predictions using `predict_proba()`.
+- Added specialist recommendations, consultation guidance, and Google Maps integration.
+
+---
