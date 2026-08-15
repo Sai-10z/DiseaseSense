@@ -17,7 +17,7 @@
 
 ---
 
-# 📸 Project Snapshots
+## 📸 Project Snapshots
 
 The screenshots below showcase the complete **DiseaseSense** workflow, from symptom selection to AI-powered disease prediction and care guidance.
 
@@ -92,7 +92,7 @@ DiseaseSense combines machine learning predictions with simple clinical guidance
 
 ---
 
-# 🏗️ Workflow & Prediction Pipeline
+## 🏗️ Workflow & Prediction Pipeline
 
 The following workflow shows how user input moves through the prediction pipeline before the final results are displayed.
 
@@ -179,34 +179,32 @@ DiseaseSense/
 
 ---
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
 Follow the steps below to set up and run DiseaseSense locally.
 
-## 1️⃣ Clone the Repository
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/<your-username>/DiseaseSense.git
 cd DiseaseSense
 ```
 
-## 2️⃣ Create a Virtual Environment
+### 2️⃣ Create a Virtual Environment
 
-### Windows
-
+Windows
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### Linux / macOS
-
+Linux / macOS
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-## 3️⃣ Install Dependencies
+### 3️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -218,13 +216,13 @@ pip install -r requirements.txt
 cd app
 ```
 
-## 5️⃣ Start the Development Server
+### 5️⃣ Start the Development Server
 
 ```bash
 python manage.py runserver
 ```
 
-## 6️⃣ Open the Application
+### 6️⃣ Open the Application
 
 ```bash
 Open your browser and visit: http://127.0.0.1:8000/
@@ -232,7 +230,7 @@ Open your browser and visit: http://127.0.0.1:8000/
 
 ---
 
-# 🔮 Future Improvements
+## 🔮 Future Improvements
 
 - Explainable AI (XAI) to show how symptoms influence predictions
 - Symptom tracking to monitor changes over time
