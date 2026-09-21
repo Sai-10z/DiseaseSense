@@ -1,4 +1,4 @@
-# 🧬 DiseaseSense : Machine Learning Symptom Analysis System
+# 🧬 DiseaseSense : Machine Learning Symptom Analysis
 
 **DiseaseSense** is a machine learning web application built with **Python**, **Django**, and **Scikit-Learn** that predicts potential disease classes based on user-selected symptoms. It combines machine learning predictions with basic clinical guidance to help users better understand their symptoms before consulting a healthcare professional.
 
